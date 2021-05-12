@@ -1,4 +1,4 @@
-import { Crypto } from 'turtlecoin-crypto';
+import { Crypto } from 'ninjacoin-crypto';
 import * as BigInteger from 'big-integer';
 /** @ignore */
 declare const NinjaCoinCrypto: Crypto;
@@ -10,7 +10,7 @@ export declare enum PortableStorageConstants {
     VERSION = 1
 }
 export * from './Types/PortableStorageValue';
-export { ICryptoConfig } from 'turtlecoin-crypto';
+export { ICryptoConfig } from 'ninjacoin-crypto';
 export * from './Types/IExtraNonce';
 export * from './Types/IExtraTag';
 export * from './Types/ITransactionInput';

@@ -1,9 +1,9 @@
-// Copyright (c) 2020, The TurtleCoin Developers
+// Copyright (c) 2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
 import Transport from '@ledgerhq/hw-transport';
-import { Reader, Writer } from '@turtlecoin/bytestream';
+import { Reader, Writer } from '@ninjacoin/bytestream';
 import { EventEmitter } from 'events';
 import { Address, KeyPair, Keys, Transaction } from './';
 import { LedgerTypes } from './Types/Ledger';
@@ -22,7 +22,7 @@ const IDENT = '547572746c65436f696e206973206e6f742061204d6f6e65726f20666f726b21'
 
 /**
  * An easy to use interface that uses a Ledger HW transport to communicate with
- * the TurtleCoin application running on a ledger device.
+ * the ninjacoin application running on a ledger device.
  * Please see. See https://github.com/LedgerHQ/ledgerjs for available transport providers
  */
 export class LedgerDevice extends EventEmitter {
@@ -114,7 +114,7 @@ export class LedgerDevice extends EventEmitter {
 
     /**
      * Checks to make sure that the application running on the ledger
-     * at least claims to be the TurtleCoin ledger application
+     * at least claims to be the ninjacoin ledger application
      */
     public async checkIdent (): Promise<boolean> {
         const ident = await this.getIdent();

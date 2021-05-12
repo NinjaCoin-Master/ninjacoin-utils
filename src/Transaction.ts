@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -13,7 +13,7 @@ import {
     TransactionOutputs,
     NinjaCoinCrypto
 } from './Types';
-import { Reader, Writer } from '@turtlecoin/bytestream';
+import { Reader, Writer } from '@ninjacoin/bytestream';
 
 /** @ignore */
 const TransactionVersion2Suffix = 'bc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a' +
@@ -28,7 +28,7 @@ interface Cache {
 }
 
 /**
- * Represents a TurtleCoin Transaction
+ * Represents a ninjacoin Transaction
  */
 export class Transaction {
     /**

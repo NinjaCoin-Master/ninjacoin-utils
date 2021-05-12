@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -14,12 +14,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Address = exports.SIZES = void 0;
 const AddressPrefix_1 = require("./AddressPrefix");
-const base58_1 = require("@turtlecoin/base58");
+const base58_1 = require("@ninjacoin/base58");
 const Common_1 = require("./Common");
 const Config_1 = require("./Config");
 const Types_1 = require("./Types");
-const mnemonics_1 = require("@turtlecoin/mnemonics");
-const bytestream_1 = require("@turtlecoin/bytestream");
+const mnemonics_1 = require("@ninjacoin/mnemonics");
+const bytestream_1 = require("@ninjacoin/bytestream");
 /** @ignore */
 var SIZES;
 (function (SIZES) {
@@ -27,7 +27,7 @@ var SIZES;
     SIZES[SIZES["CHECKSUM"] = 4] = "CHECKSUM";
 })(SIZES = exports.SIZES || (exports.SIZES = {}));
 /**
- * Represents a TurtleCoin address
+ * Represents a ninjacoin address
  */
 class Address {
     constructor() {

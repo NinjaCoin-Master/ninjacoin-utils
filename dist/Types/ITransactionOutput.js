@@ -1,11 +1,11 @@
 "use strict";
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionOutputs = void 0;
 const Types_1 = require("../Types");
-const bytestream_1 = require("@turtlecoin/bytestream");
+const bytestream_1 = require("@ninjacoin/bytestream");
 var TransactionOutputs;
 (function (TransactionOutputs) {
     /**

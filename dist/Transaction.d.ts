@@ -9,7 +9,7 @@ interface Cache {
     hash: string;
 }
 /**
- * Represents a TurtleCoin Transaction
+ * Represents a ninjacoin Transaction
  */
 export declare class Transaction {
     /**

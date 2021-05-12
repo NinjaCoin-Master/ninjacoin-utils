@@ -1,4 +1,4 @@
-// Copyright (c) 2020, The TurtleCoin Developers
+// Copyright (c) 2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -26,7 +26,7 @@ export namespace LedgerTypes {
     }
 
     /**
-     * Represents the APDU command types available in the TurtleCoin application
+     * Represents the APDU command types available in the ninjacoin application
      * for ledger hardware wallets
      */
     export enum Command {

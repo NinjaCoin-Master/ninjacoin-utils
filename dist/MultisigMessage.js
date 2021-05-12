@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2020, The TurtleCoin Developers
+// Copyright (c) 2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -17,8 +17,8 @@ const Address_1 = require("./Address");
 const AddressPrefix_1 = require("./AddressPrefix");
 const Types_1 = require("./Types");
 const aes_js_1 = require("aes-js");
-const bytestream_1 = require("@turtlecoin/bytestream");
-const base58_1 = require("@turtlecoin/base58");
+const bytestream_1 = require("@ninjacoin/bytestream");
+const base58_1 = require("@ninjacoin/base58");
 /** @ignore */
 const messagePrefix = 0xde0aec198;
 /**

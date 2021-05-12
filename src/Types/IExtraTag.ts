@@ -1,8 +1,8 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
-import { Reader, Writer } from '@turtlecoin/bytestream';
+import { Reader, Writer } from '@ninjacoin/bytestream';
 import { ExtraNonceTag } from '../Types';
 import { Common } from '../Common';
 

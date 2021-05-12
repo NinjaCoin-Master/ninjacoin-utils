@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -6,7 +6,7 @@ import { Config, ICoinConfig, ICoinRunningConfig } from './Config';
 import { Transaction } from './Transaction';
 import { ParentBlock } from './ParentBlock';
 import { TransactionInputs, TransactionOutputs, NinjaCoinCrypto } from './Types';
-import { Reader, Writer } from '@turtlecoin/bytestream';
+import { Reader, Writer } from '@ninjacoin/bytestream';
 import { Common } from './Common';
 
 /** @ignore */
@@ -18,7 +18,7 @@ interface Cache {
 }
 
 /**
- * Represents a TurtleCoin Block
+ * Represents a ninjacoin Block
  */
 export class Block {
     /**

@@ -1,10 +1,10 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
-import { Base58 } from '@turtlecoin/base58';
+import { Base58 } from '@ninjacoin/base58';
 import { Config } from './Config';
-import { Reader, Writer } from '@turtlecoin/bytestream';
+import { Reader, Writer } from '@ninjacoin/bytestream';
 
 /** @ignore */
 export enum SIZES {
@@ -13,7 +13,7 @@ export enum SIZES {
 }
 
 /**
- * Represents a TurtleCoin address prefix
+ * Represents a ninjacoin address prefix
  */
 export class AddressPrefix {
     /**

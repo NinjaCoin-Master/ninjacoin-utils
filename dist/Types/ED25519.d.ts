@@ -39,7 +39,7 @@ export declare namespace ED25519 {
         isPaired(): Promise<boolean>;
     }
     /**
-     * Represents a set of ED25519 key pairs (view and spend) used by TurtleCoin wallets
+     * Represents a set of ED25519 key pairs (view and spend) used by ninjacoin wallets
      */
     class Keys {
         protected m_spendKeys: KeyPair;

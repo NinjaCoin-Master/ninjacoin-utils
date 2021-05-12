@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -693,7 +693,7 @@ class LedgerNote extends events_1.EventEmitter {
     }
     /**
      * Constructs a new Transaction using the supplied values.
-     * The resulting transaction can be broadcasted to the TurtleCoin network
+     * The resulting transaction can be broadcasted to the ninjacoin network
      * @async
      * @param outputs the new outputs for the transaction (TO)
      * @param inputs outputs we will be spending (FROM)

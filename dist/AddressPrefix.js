@@ -1,12 +1,12 @@
 "use strict";
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddressPrefix = exports.SIZES = void 0;
-const base58_1 = require("@turtlecoin/base58");
+const base58_1 = require("@ninjacoin/base58");
 const Config_1 = require("./Config");
-const bytestream_1 = require("@turtlecoin/bytestream");
+const bytestream_1 = require("@ninjacoin/bytestream");
 /** @ignore */
 var SIZES;
 (function (SIZES) {
@@ -14,7 +14,7 @@ var SIZES;
     SIZES[SIZES["CHECKSUM"] = 4] = "CHECKSUM";
 })(SIZES = exports.SIZES || (exports.SIZES = {}));
 /**
- * Represents a TurtleCoin address prefix
+ * Represents a ninjacoin address prefix
  */
 class AddressPrefix {
     /**

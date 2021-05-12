@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2018-2020, Brandon Lehmann, The TurtleCoin Developers
+// Copyright (c) 2018-2020, Brandon Lehmann, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {

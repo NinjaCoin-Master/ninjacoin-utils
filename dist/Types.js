@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
@@ -14,11 +14,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BigInteger = exports.StorageType = exports.PortableStorage = exports.PortableStorageConstants = exports.NinjaCoinCrypto = void 0;
-const turtlecoin_crypto_1 = require("turtlecoin-crypto");
+const ninjacoin_crypto_1 = require("ninjacoin-crypto");
 const BigInteger = require("big-integer");
 exports.BigInteger = BigInteger;
 /** @ignore */
-const NinjaCoinCrypto = new turtlecoin_crypto_1.Crypto();
+const NinjaCoinCrypto = new ninjacoin_crypto_1.Crypto();
 exports.NinjaCoinCrypto = NinjaCoinCrypto;
 /** @ignore */
 var PortableStorageConstants;

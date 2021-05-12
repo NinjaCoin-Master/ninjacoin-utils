@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Reader } from '@turtlecoin/bytestream';
+import { Reader } from '@ninjacoin/bytestream';
 import { PortableStoreValue } from '../Types';
 /** @ignore */
 export declare enum StorageType {

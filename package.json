@@ -23,12 +23,12 @@
     "test-js": "env FORCE_JS=1 ./node_modules/.bin/mocha --exit --timeout 30000 --require ts-node/register test/test.ts"
   },
   "keywords": [
-    "TurtleCoin",
+    "NinjaCoin",
     "Utilities"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/turtlecoin/turtlecoin-utils.git"
+    "url": "git+https://github.com/ninjacoin-master/ninjacoin-utils.git"
   },
   "homepage": "https://utils.turtlecoin.dev",
   "bugs": {
@@ -44,9 +44,9 @@
   },
   "dependencies": {
     "@ledgerhq/hw-transport": "^5.43.0",
-    "@turtlecoin/base58": "0.0.14",
-    "@turtlecoin/bytestream": "0.0.16",
-    "@turtlecoin/mnemonics": "0.0.12",
+    "@ninjacoin/base58": "0.0.14",
+    "@ninjacoin/bytestream": "0.0.16",
+    "@ninjacoin/mnemonics": "0.0.12",
     "@types/aes-js": "^3.1.1",
     "@types/ledgerhq__hw-transport": "^4.21.3",
     "@types/ledgerhq__hw-transport-node-hid": "^4.22.2",

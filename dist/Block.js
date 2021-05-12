@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -17,10 +17,10 @@ const Config_1 = require("./Config");
 const Transaction_1 = require("./Transaction");
 const ParentBlock_1 = require("./ParentBlock");
 const Types_1 = require("./Types");
-const bytestream_1 = require("@turtlecoin/bytestream");
+const bytestream_1 = require("@ninjacoin/bytestream");
 const Common_1 = require("./Common");
 /**
- * Represents a TurtleCoin Block
+ * Represents a ninjacoin Block
  */
 class Block {
     constructor() {

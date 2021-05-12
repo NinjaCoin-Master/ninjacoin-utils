@@ -1,14 +1,14 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
 import { AddressPrefix } from './AddressPrefix';
-import { Base58 } from '@turtlecoin/base58';
+import { Base58 } from '@ninjacoin/base58';
 import { Common } from './Common';
 import { Config } from './Config';
 import { ED25519, NinjaCoinCrypto } from './Types';
-import { Mnemonics } from '@turtlecoin/mnemonics';
-import { Reader, Writer } from '@turtlecoin/bytestream';
+import { Mnemonics } from '@ninjacoin/mnemonics';
+import { Reader, Writer } from '@ninjacoin/bytestream';
 
 /** @ignore */
 interface Cache {
@@ -23,7 +23,7 @@ export enum SIZES {
 }
 
 /**
- * Represents a TurtleCoin address
+ * Represents a ninjacoin address
  */
 export class Address {
     /**

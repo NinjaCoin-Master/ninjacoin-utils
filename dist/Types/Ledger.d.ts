@@ -20,7 +20,7 @@ export declare namespace LedgerTypes {
         COMPLETE = 7
     }
     /**
-     * Represents the APDU command types available in the TurtleCoin application
+     * Represents the APDU command types available in the ninjacoin application
      * for ledger hardware wallets
      */
     enum Command {

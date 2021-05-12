@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -14,7 +14,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ip2int = exports.int2ip = exports.LevinPayloads = exports.SIZES = void 0;
 const Types_1 = require("../Types");
-const bytestream_1 = require("@turtlecoin/bytestream");
+const bytestream_1 = require("@ninjacoin/bytestream");
 const Block_1 = require("../Block");
 const Transaction_1 = require("../Transaction");
 /** @ignore */

@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { Reader } from '@turtlecoin/bytestream';
+import { Reader } from '@ninjacoin/bytestream';
 import { Block } from '../Block';
 import { Transaction } from '../Transaction';
 /** @ignore */

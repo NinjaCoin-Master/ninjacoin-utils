@@ -6,7 +6,7 @@ export declare enum SIZES {
     CHECKSUM = 4
 }
 /**
- * Represents a TurtleCoin address
+ * Represents a ninjacoin address
  */
 export declare class Address {
     /**

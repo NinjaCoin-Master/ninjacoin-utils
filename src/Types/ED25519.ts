@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -135,7 +135,7 @@ export namespace ED25519 {
     }
 
     /**
-     * Represents a set of ED25519 key pairs (view and spend) used by TurtleCoin wallets
+     * Represents a set of ED25519 key pairs (view and spend) used by ninjacoin wallets
      */
     export class Keys {
         protected m_spendKeys: KeyPair = new KeyPair();

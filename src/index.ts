@@ -1,8 +1,8 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
-import { Crypto } from 'turtlecoin-crypto';
+import { Crypto } from 'ninjacoin-crypto';
 
 /** @ignore */
 import * as Types from './Types';
@@ -10,7 +10,7 @@ export { Address } from './Address';
 export { AddressPrefix } from './AddressPrefix';
 export { Block } from './Block';
 export { BlockTemplate } from './BlockTemplate';
-export { Crypto, ICryptoConfig, CryptoType } from 'turtlecoin-crypto';
+export { Crypto, ICryptoConfig, CryptoType } from 'ninjacoin-crypto';
 export { CryptoNote } from './CryptoNote';
 export { Interfaces } from './Types/ITransaction';
 export { LedgerDevice, LedgerTransport } from './LedgerDevice';

@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -7,7 +7,7 @@ import { AddressPrefix } from '../AddressPrefix';
 import { Address } from '../Address';
 import { Transaction } from '../Transaction';
 import { ICoinConfig } from '../Config';
-import { ICryptoConfig } from 'turtlecoin-crypto';
+import { ICryptoConfig } from 'ninjacoin-crypto';
 import { EventEmitter } from 'events';
 
 export namespace CryptoNoteInterfaces {

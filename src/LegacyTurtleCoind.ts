@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2020, Brandon Lehmann, The TurtleCoin Developers
+// Copyright (c) 2018-2020, Brandon Lehmann, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 

@@ -1,9 +1,9 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
 import { BigInteger, PortableStorage, StorageType } from '../Types';
-import { Reader, Writer } from '@turtlecoin/bytestream';
+import { Reader, Writer } from '@ninjacoin/bytestream';
 import { Block } from '../Block';
 import { Transaction } from '../Transaction';
 

@@ -9,7 +9,7 @@ import { ICoinConfig } from './Config';
 export { Transport as LedgerTransport };
 /**
  * An easy to use interface that uses a Ledger HW transport to communicate with
- * the TurtleCoin application running on a ledger device.
+ * the ninjacoin application running on a ledger device.
  * Please see. See https://github.com/LedgerHQ/ledgerjs for available transport providers
  */
 export declare class LedgerDevice extends EventEmitter {
@@ -65,7 +65,7 @@ export declare class LedgerDevice extends EventEmitter {
     getIdent(): Promise<string>;
     /**
      * Checks to make sure that the application running on the ledger
-     * at least claims to be the TurtleCoin ledger application
+     * at least claims to be the ninjacoin ledger application
      */
     checkIdent(): Promise<boolean>;
     /**

@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2020, The TurtleCoin Developers
+// Copyright (c) 2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LedgerDevice = exports.LedgerTransport = void 0;
 const hw_transport_1 = require("@ledgerhq/hw-transport");
 exports.LedgerTransport = hw_transport_1.default;
-const bytestream_1 = require("@turtlecoin/bytestream");
+const bytestream_1 = require("@ninjacoin/bytestream");
 const events_1 = require("events");
 const _1 = require("./");
 const Ledger_1 = require("./Types/Ledger");
@@ -26,7 +26,7 @@ const semver = require("semver");
 const IDENT = '547572746c65436f696e206973206e6f742061204d6f6e65726f20666f726b21';
 /**
  * An easy to use interface that uses a Ledger HW transport to communicate with
- * the TurtleCoin application running on a ledger device.
+ * the ninjacoin application running on a ledger device.
  * Please see. See https://github.com/LedgerHQ/ledgerjs for available transport providers
  */
 class LedgerDevice extends events_1.EventEmitter {
@@ -89,7 +89,7 @@ class LedgerDevice extends events_1.EventEmitter {
     }
     /**
      * Checks to make sure that the application running on the ledger
-     * at least claims to be the TurtleCoin ledger application
+     * at least claims to be the ninjacoin ledger application
      */
     checkIdent() {
         return __awaiter(this, void 0, void 0, function* () {

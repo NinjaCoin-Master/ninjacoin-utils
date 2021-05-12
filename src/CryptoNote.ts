@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
@@ -491,7 +491,7 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
 
     /**
      * Constructs a new Transaction using the supplied values.
-     * The resulting transaction can be broadcasted to the TurtleCoin network
+     * The resulting transaction can be broadcasted to the ninjacoin network
      * @async
      * @param outputs the new outputs for the transaction (TO)
      * @param inputs outputs we will be spending (FROM)
@@ -737,7 +737,7 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
 
     /**
      * Constructs a new Transaction using the supplied values.
-     * The resulting transaction can be broadcasted to the TurtleCoin network
+     * The resulting transaction can be broadcasted to the ninjacoin network
      * @async
      * @param outputs the new outputs for the transaction (TO)
      * @param inputs outputs we will be spending (FROM)

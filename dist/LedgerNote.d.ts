@@ -223,7 +223,7 @@ export declare class LedgerNote extends EventEmitter implements ICryptoNote {
     createTransactionStructure(outputs: Interfaces.GeneratedOutput[], inputs: Interfaces.Output[], randomOutputs: Interfaces.RandomOutput[][], mixin: number, feeAmount?: number, paymentId?: string, unlockTime?: number, extraData?: any): Promise<Interfaces.IPreparedTransaction>;
     /**
      * Constructs a new Transaction using the supplied values.
-     * The resulting transaction can be broadcasted to the TurtleCoin network
+     * The resulting transaction can be broadcasted to the ninjacoin network
      * @async
      * @param outputs the new outputs for the transaction (TO)
      * @param inputs outputs we will be spending (FROM)

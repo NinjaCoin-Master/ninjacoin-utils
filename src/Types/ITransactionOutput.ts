@@ -1,9 +1,9 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
 import { BigInteger } from '../Types';
-import { Writer } from '@turtlecoin/bytestream';
+import { Writer } from '@ninjacoin/bytestream';
 
 export namespace TransactionOutputs {
 

@@ -10,7 +10,7 @@ interface Cache {
     longHash: string;
 }
 /**
- * Represents a TurtleCoin Block
+ * Represents a ninjacoin Block
  */
 export declare class Block {
     /**

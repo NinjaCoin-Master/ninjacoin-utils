@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -128,7 +128,7 @@ var ED25519;
     }
     ED25519.KeyPair = KeyPair;
     /**
-     * Represents a set of ED25519 key pairs (view and spend) used by TurtleCoin wallets
+     * Represents a set of ED25519 key pairs (view and spend) used by ninjacoin wallets
      */
     class Keys {
         constructor() {

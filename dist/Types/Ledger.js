@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) 2020, The TurtleCoin Developers
+// Copyright (c) 2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -29,7 +29,7 @@ var LedgerTypes;
         TransactionState[TransactionState["COMPLETE"] = 7] = "COMPLETE";
     })(TransactionState = LedgerTypes.TransactionState || (LedgerTypes.TransactionState = {}));
     /**
-     * Represents the APDU command types available in the TurtleCoin application
+     * Represents the APDU command types available in the ninjacoin application
      * for ledger hardware wallets
      */
     let Command;

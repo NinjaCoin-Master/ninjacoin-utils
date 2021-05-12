@@ -1,8 +1,8 @@
-// Copyright (c) 2018-2020, The TurtleCoin Developers
+// Copyright (c) 2018-2020, The ninjacoin Developers
 //
 // Please see the included LICENSE file for more information.
 
-import { Crypto } from 'turtlecoin-crypto';
+import { Crypto } from 'ninjacoin-crypto';
 import * as BigInteger from 'big-integer';
 
 /** @ignore */
@@ -19,7 +19,7 @@ export enum PortableStorageConstants {
 
 export * from './Types/PortableStorageValue';
 
-export { ICryptoConfig } from 'turtlecoin-crypto';
+export { ICryptoConfig } from 'ninjacoin-crypto';
 
 export * from './Types/IExtraNonce';
 
