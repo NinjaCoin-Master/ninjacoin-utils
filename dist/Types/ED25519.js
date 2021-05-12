@@ -39,10 +39,10 @@ var ED25519;
                 }
                 /* If no entropy was supplied, we'll go find our own */
                 entropy = entropy || rand(256);
-                if (publicKey && (yield Types_1.TurtleCoinCrypto.checkKey(publicKey))) {
+                if (publicKey && (yield Types_1.NinjaCoinCrypto.checkKey(publicKey))) {
                     pair.m_publicKey = publicKey;
                 }
-                if (privateKey && (yield Types_1.TurtleCoinCrypto.checkScalar(privateKey))) {
+                if (privateKey && (yield Types_1.NinjaCoinCrypto.checkScalar(privateKey))) {
                     pair.m_privateKey = privateKey;
                 }
                 if (!publicKey && !privateKey) {
@@ -54,10 +54,10 @@ var ED25519;
                         we are probably looking to generate the deterministic view key for the
                         specified private spend key */
                     if (iterations && iterations === 1) {
-                        const temp = yield Types_1.TurtleCoinCrypto.cn_fast_hash(pair.m_privateKey);
+                        const temp = yield Types_1.NinjaCoinCrypto.cn_fast_hash(pair.m_privateKey);
                         yield pair.setPrivateKey(temp);
                     }
-                    pair.m_publicKey = yield Types_1.TurtleCoinCrypto.secretKeyToPublicKey(pair.m_privateKey);
+                    pair.m_publicKey = yield Types_1.NinjaCoinCrypto.secretKeyToPublicKey(pair.m_privateKey);
                 }
                 return pair;
             });
@@ -75,9 +75,9 @@ var ED25519;
         setPrivateKey(key) {
             return __awaiter(this, void 0, void 0, function* () {
                 try {
-                    this.m_privateKey = (yield Types_1.TurtleCoinCrypto.checkScalar(key))
+                    this.m_privateKey = (yield Types_1.NinjaCoinCrypto.checkScalar(key))
                         ? key
-                        : yield Types_1.TurtleCoinCrypto.scReduce32(key);
+                        : yield Types_1.NinjaCoinCrypto.scReduce32(key);
                 }
                 catch (e) {
                     this.m_publicKey = key;
@@ -99,7 +99,7 @@ var ED25519;
                 let isPubKey = false;
                 // Try to verify that it is a public key via the library
                 try {
-                    isPubKey = yield Types_1.TurtleCoinCrypto.checkKey(key);
+                    isPubKey = yield Types_1.NinjaCoinCrypto.checkKey(key);
                 }
                 catch (e) {
                     // If the library could not process this, then set the key anyway
@@ -122,7 +122,7 @@ var ED25519;
                 if (this.publicKey.length === 0 || this.privateKey.length === 0) {
                     return false;
                 }
-                return ((yield Types_1.TurtleCoinCrypto.secretKeyToPublicKey(this.privateKey)) === this.publicKey);
+                return ((yield Types_1.NinjaCoinCrypto.secretKeyToPublicKey(this.privateKey)) === this.publicKey);
             });
         }
     }
@@ -196,7 +196,7 @@ function simpleKdf(value, iterations) {
         /** This is a very simple implementation of a pseudo PBKDF2 function */
         let hex = Buffer.from(value).toString('hex');
         for (let i = 0; i < iterations; i++) {
-            hex = yield Types_1.TurtleCoinCrypto.cn_fast_hash(hex);
+            hex = yield Types_1.NinjaCoinCrypto.cn_fast_hash(hex);
         }
         return hex;
     });

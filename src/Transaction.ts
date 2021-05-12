@@ -11,7 +11,7 @@ import {
     ExtraTag,
     TransactionInputs,
     TransactionOutputs,
-    TurtleCoinCrypto
+    NinjaCoinCrypto
 } from './Types';
 import { Reader, Writer } from '@turtlecoin/bytestream';
 
@@ -94,7 +94,7 @@ export class Transaction {
 
         writer.hash(this.recipientPublicViewKey);
 
-        return TurtleCoinCrypto.cn_fast_hash(writer.blob);
+        return NinjaCoinCrypto.cn_fast_hash(writer.blob);
     }
 
     /**
@@ -172,10 +172,10 @@ export class Transaction {
 
         this.m_cached.blob = this.toString();
 
-        const hash = await TurtleCoinCrypto.cn_fast_hash(this.m_cached.blob);
+        const hash = await NinjaCoinCrypto.cn_fast_hash(this.m_cached.blob);
 
         if (this.version >= 2) {
-            const hash2 = await TurtleCoinCrypto.cn_fast_hash(hash + TransactionVersion2Suffix);
+            const hash2 = await NinjaCoinCrypto.cn_fast_hash(hash + TransactionVersion2Suffix);
 
             this.m_cached.hash = hash2;
 
@@ -302,10 +302,10 @@ export class Transaction {
 
         this.m_cached.prefix = this.prefix;
 
-        const hash = await TurtleCoinCrypto.cn_fast_hash(this.m_cached.prefix);
+        const hash = await NinjaCoinCrypto.cn_fast_hash(this.m_cached.prefix);
 
         if (this.version >= 2) {
-            const hash2 = await TurtleCoinCrypto.cn_fast_hash(hash + TransactionVersion2Suffix);
+            const hash2 = await NinjaCoinCrypto.cn_fast_hash(hash + TransactionVersion2Suffix);
 
             this.m_cached.prefixHash = hash2;
 
@@ -546,7 +546,7 @@ export class Transaction {
 
         this.m_extra = readExtra(this.m_rawExtra);
 
-        if (this.publicKey && await TurtleCoinCrypto.checkKey(this.publicKey)) {
+        if (this.publicKey && await NinjaCoinCrypto.checkKey(this.publicKey)) {
             await this.transactionKeys.setPublicKey(this.publicKey);
         }
     }

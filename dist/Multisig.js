@@ -68,7 +68,7 @@ class Multisig {
             if (!this.isViewReady) {
                 throw new Error('Not all participants have been loaded');
             }
-            return Types_1.TurtleCoinCrypto.calculateSharedPrivateKey(this.m_view_keys);
+            return Types_1.NinjaCoinCrypto.calculateSharedPrivateKey(this.m_view_keys);
         });
     }
     /**
@@ -85,7 +85,7 @@ class Multisig {
                     keys.push(key.publicKey);
                 }
             }
-            return Types_1.TurtleCoinCrypto.calculateSharedPublicKey(keys);
+            return Types_1.NinjaCoinCrypto.calculateSharedPublicKey(keys);
         });
     }
     /**
@@ -135,7 +135,7 @@ class Multisig {
             if (this.m_threshold !== this.m_participants) {
                 const multisig_keys = [];
                 for (const multisig_key of this.m_wallet_multisig_keys) {
-                    const keys = yield Types_1.TurtleCoinCrypto.calculateMultisigPrivateKeys(multisig_key.privateKey, this.m_participant_keys);
+                    const keys = yield Types_1.NinjaCoinCrypto.calculateMultisigPrivateKeys(multisig_key.privateKey, this.m_participant_keys);
                     for (const key of keys) {
                         multisig_keys.push(yield KeyPair.from(undefined, key));
                     }
@@ -209,13 +209,13 @@ class Multisig {
             }
             const result = new Multisig();
             for (const key of multisig_private_keys) {
-                if (!(yield Types_1.TurtleCoinCrypto.checkScalar(key))) {
+                if (!(yield Types_1.NinjaCoinCrypto.checkScalar(key))) {
                     throw new Error('Found an invalid private key in the list of multisig private keys');
                 }
                 result.m_multisig_keys.push(yield KeyPair.from(undefined, key));
                 result.m_wallet_multisig_keys.push(yield KeyPair.from(undefined, key));
             }
-            if (!(yield Types_1.TurtleCoinCrypto.checkScalar(sharedPrivateViewKey))) {
+            if (!(yield Types_1.NinjaCoinCrypto.checkScalar(sharedPrivateViewKey))) {
                 throw new Error('Private view key is not a valid private key');
             }
             result.m_view_keys.push(sharedPrivateViewKey);
@@ -252,7 +252,7 @@ class Multisig {
      */
     static restoreKeyImage(publicEphemeral, derivation, outputIndex, partialKeyImages) {
         return __awaiter(this, void 0, void 0, function* () {
-            return Types_1.TurtleCoinCrypto.restoreKeyImage(publicEphemeral, derivation, outputIndex, partialKeyImages);
+            return Types_1.NinjaCoinCrypto.restoreKeyImage(publicEphemeral, derivation, outputIndex, partialKeyImages);
         });
     }
     /**
@@ -264,7 +264,7 @@ class Multisig {
      */
     addParticipant(publicSpendKeys, privateViewKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (privateViewKey && !(yield Types_1.TurtleCoinCrypto.checkScalar(privateViewKey))) {
+            if (privateViewKey && !(yield Types_1.NinjaCoinCrypto.checkScalar(privateViewKey))) {
                 throw new Error('Private view key is not a valid private key');
             }
             if (Array.isArray(publicSpendKeys) && publicSpendKeys.length > 1 && privateViewKey) {
@@ -274,7 +274,7 @@ class Multisig {
                 publicSpendKeys = [publicSpendKeys];
             }
             for (const key of publicSpendKeys) {
-                if (!(yield Types_1.TurtleCoinCrypto.checkKey(key))) {
+                if (!(yield Types_1.NinjaCoinCrypto.checkKey(key))) {
                     throw new Error('Found an invalid public spend key in the list');
                 }
             }
@@ -300,7 +300,7 @@ class Multisig {
         return __awaiter(this, void 0, void 0, function* () {
             const promises = [];
             for (const multisigKey of this.m_multisig_keys) {
-                promises.push(Types_1.TurtleCoinCrypto.generateKeyImage(publicEphemeral, multisigKey.privateKey));
+                promises.push(Types_1.NinjaCoinCrypto.generateKeyImage(publicEphemeral, multisigKey.privateKey));
             }
             const results = yield Promise.all(promises);
             const partialKeyImages = [];
@@ -391,7 +391,7 @@ function required_keys(threshold, participants) {
 /** @ignore */
 function generatePartialSigningKey(preparedSignature, index, privateSpendKey) {
     return __awaiter(this, void 0, void 0, function* () {
-        const key = yield Types_1.TurtleCoinCrypto.generatePartialSigningKey(preparedSignature, privateSpendKey);
+        const key = yield Types_1.NinjaCoinCrypto.generatePartialSigningKey(preparedSignature, privateSpendKey);
         return {
             key,
             index
@@ -436,7 +436,7 @@ function restoreRingSignatures(derivation, outputIndex, partialSigningKeys, real
             }
             keys.push(partialSigningKey.partialSigningKey);
         }
-        const sigs = yield Types_1.TurtleCoinCrypto.restoreRingSignatures(derivation, outputIndex, keys, realOutputIndex, key, signatures);
+        const sigs = yield Types_1.NinjaCoinCrypto.restoreRingSignatures(derivation, outputIndex, keys, realOutputIndex, key, signatures);
         return {
             sigs,
             index
@@ -457,6 +457,6 @@ function getInputKeys(preparedSignatures, index) {
 /** @ignore */
 function checkRingSignatures(hash, keyImage, publicKeys, signatures) {
     return __awaiter(this, void 0, void 0, function* () {
-        return Types_1.TurtleCoinCrypto.checkRingSignatures(hash, keyImage, publicKeys, signatures);
+        return Types_1.NinjaCoinCrypto.checkRingSignatures(hash, keyImage, publicKeys, signatures);
     });
 }

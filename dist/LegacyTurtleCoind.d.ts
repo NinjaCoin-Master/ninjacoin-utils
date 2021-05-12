@@ -1,26 +1,26 @@
 import { HTTPClient } from './Helpers/HTTPClient';
-import { TurtleCoindTypes } from './Types/TurtleCoind';
+import { NinjaCoindTypes } from './Types/NinjaCoind';
 /**
- * A class interface that allows for easy interaction with Legacy TurtleCoind
+ * A class interface that allows for easy interaction with Legacy NinjaCoind
  * THIS OBJECT IS DEPRECATED AND SUBJECT TO REMOVAL WITH LITTLE NOTICE
  */
-export declare class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.ITurtleCoind {
+export declare class LegacyNinjaCoind extends HTTPClient implements NinjaCoindTypes.INinjaCoind {
     /**
      * Retrieves the node fee information
      */
-    fee(): Promise<TurtleCoindTypes.IFee>;
+    fee(): Promise<NinjaCoindTypes.IFee>;
     /**
      * Retrieves the node height information
      */
-    height(): Promise<TurtleCoindTypes.IHeight>;
+    height(): Promise<NinjaCoindTypes.IHeight>;
     /**
      * Retrieves the node information
      */
-    info(): Promise<TurtleCoindTypes.IInfo>;
+    info(): Promise<NinjaCoindTypes.IInfo>;
     /**
      * Retrieves the node peer information
      */
-    peers(): Promise<TurtleCoindTypes.IPeers>;
+    peers(): Promise<NinjaCoindTypes.IPeers>;
     /**
      * Retrieves the number of blocks the node has in its chain
      */
@@ -30,29 +30,29 @@ export declare class LegacyTurtleCoind extends HTTPClient implements TurtleCoind
      * Requires the daemon to have the explorer enabled
      * @param block the block height or hash
      */
-    block(block: string | number): Promise<TurtleCoindTypes.IBlock>;
+    block(block: string | number): Promise<NinjaCoindTypes.IBlock>;
     /**
      * Retrieves the block information for the last block available
      */
-    lastBlock(): Promise<TurtleCoindTypes.IBlock>;
+    lastBlock(): Promise<NinjaCoindTypes.IBlock>;
     /**
      * Retrieves the block information for the last 30 blocks up to the current height
      * Requires the daemon to have the explorer enabled
      * @param height the height to stop at
      */
-    blockHeaders(height: number): Promise<TurtleCoindTypes.IBlock[]>;
+    blockHeaders(height: number): Promise<NinjaCoindTypes.IBlock[]>;
     /**
      * Retrieves the RawBlock information from the node for the specified block
      * Requires the daemon to have the explorer enabled
      * @param block the block height or hash
      */
-    rawBlock(block: string | number): Promise<TurtleCoindTypes.IRawBlock>;
+    rawBlock(block: string | number): Promise<NinjaCoindTypes.IRawBlock>;
     /**
      * Retrieves a mining block template using the specified address and reserve size
      * @param address the wallet address that will receive the coinbase outputs
      * @param reserveSize the amount of data to reserve in the miner transaction
      */
-    blockTemplate(address: string, reserveSize?: number): Promise<TurtleCoindTypes.IBlockTemplate>;
+    blockTemplate(address: string, reserveSize?: number): Promise<NinjaCoindTypes.IBlockTemplate>;
     /**
      * Submits a block to the node for processing
      * @param block the hex representation of the block
@@ -68,7 +68,7 @@ export declare class LegacyTurtleCoind extends HTTPClient implements TurtleCoind
      * Requires the daemon to have the explorer enabled
      * @param hash the transaction hash
      */
-    transaction(hash: string): Promise<TurtleCoindTypes.ITransaction>;
+    transaction(hash: string): Promise<NinjaCoindTypes.ITransaction>;
     /**
      * Retrieves the RawTransaction from the node for the specified transaction
      * Requires the daemon to have the explorer enabled
@@ -80,7 +80,7 @@ export declare class LegacyTurtleCoind extends HTTPClient implements TurtleCoind
      * Requires the daemon to have the explorer enabled
      * in the memory pool
      */
-    transactionPool(): Promise<TurtleCoindTypes.TransactionSummary[]>;
+    transactionPool(): Promise<NinjaCoindTypes.TransactionSummary[]>;
     /**
      * Retrieves the RawTransactions currently in the memory pool
      * Requires the daemon to have the explorer enabled
@@ -92,25 +92,25 @@ export declare class LegacyTurtleCoind extends HTTPClient implements TurtleCoind
      * @param lastKnownBlock the last known block hash
      * @param transactions an array of transaction hashes we last saw in the memory pool
      */
-    transactionPoolChanges(lastKnownBlock: string, transactions?: string[]): Promise<TurtleCoindTypes.ITransactionPoolDelta>;
+    transactionPoolChanges(lastKnownBlock: string, transactions?: string[]): Promise<NinjaCoindTypes.ITransactionPoolDelta>;
     /**
      * Retrieves information on where the specified transactions are located
      * @param transactions an array of transaction hashes
      */
-    transactionsStatus(transactions: string[]): Promise<TurtleCoindTypes.ITransactionsStatus>;
+    transactionsStatus(transactions: string[]): Promise<NinjaCoindTypes.ITransactionsStatus>;
     /**
      * Retrieves random global indexes typically used for mixing operations for the specified
      * amounts and for the number requested (if available)
      * @param amounts an array of amounts for which we need random global indexes
      * @param count the number of global indexes to return for each amount
      */
-    randomIndexes(amounts: number[], count: number): Promise<TurtleCoindTypes.IRandomOutput[]>;
+    randomIndexes(amounts: number[], count: number): Promise<NinjaCoindTypes.IRandomOutput[]>;
     /**
      * Retrieves the global indexes for all transactions contained within the blocks heights specified (non-inclusive)
      * @param startHeight the starting block height
      * @param endHeight the ending block height
      */
-    indexes(startHeight: number, endHeight: number): Promise<TurtleCoindTypes.ITransactionIndexes[]>;
+    indexes(startHeight: number, endHeight: number): Promise<NinjaCoindTypes.ITransactionIndexes[]>;
     /**
      * Retrieves the information necessary for syncing a wallet (or other utility) against the node
      * @param checkpoints a list of block hashes that we know about in descending height order
@@ -119,7 +119,7 @@ export declare class LegacyTurtleCoind extends HTTPClient implements TurtleCoind
      * @param skipCoinbaseTransactions whether we should skip blocks that only include coinbase transactions
      * @param count the number of blocks to return
      */
-    sync(checkpoints?: string[], height?: number, timestamp?: number, skipCoinbaseTransactions?: boolean, count?: number): Promise<TurtleCoindTypes.ISync>;
+    sync(checkpoints?: string[], height?: number, timestamp?: number, skipCoinbaseTransactions?: boolean, count?: number): Promise<NinjaCoindTypes.ISync>;
     /**
      * Retrieves the RawBlocks & RawTransactions for syncing a wallet (or other utility) against the node
      * @param checkpoints a list of block hashes that we know about in descending height order
@@ -128,7 +128,7 @@ export declare class LegacyTurtleCoind extends HTTPClient implements TurtleCoind
      * @param skipCoinbaseTransactions whether we should skip blocks that only include coinbase transactions
      * @param count the number of blocks to return
      */
-    rawSync(checkpoints?: string[], height?: number, timestamp?: number, skipCoinbaseTransactions?: boolean, count?: number): Promise<TurtleCoindTypes.IRawSync>;
+    rawSync(checkpoints?: string[], height?: number, timestamp?: number, skipCoinbaseTransactions?: boolean, count?: number): Promise<NinjaCoindTypes.IRawSync>;
     /**
      * OLD LEGACY METHODS BELOW THIS MARK, SHOULD ALL BE PRIVATE
      * THEY ONLY STILL EXIST HERE AS THEY USE THE OLD TYPES AND

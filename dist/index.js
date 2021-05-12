@@ -3,7 +3,7 @@
 //
 // Please see the included LICENSE file for more information.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.on = exports.TurtleCoindTypes = exports.LedgerErrorCode = exports.LedgerTransactionState = exports.LedgerError = exports.TransactionOutputs = exports.TransactionInputs = exports.Keys = exports.KeyPair = exports.KeyOutput = exports.KeyInput = exports.ICryptoNote = exports.WalletAPI = exports.TurtleCoind = exports.LegacyTurtleCoind = exports.Transaction = exports.ParentBlock = exports.MultisigMessage = exports.Multisig = exports.LevinPayloads = exports.LevinProtocol = exports.LevinPacket = exports.LedgerNote = exports.LedgerTransport = exports.LedgerDevice = exports.CryptoNote = exports.CryptoType = exports.Crypto = exports.BlockTemplate = exports.Block = exports.AddressPrefix = exports.Address = void 0;
+exports.on = exports.NinjaCoindTypes = exports.LedgerErrorCode = exports.LedgerTransactionState = exports.LedgerError = exports.TransactionOutputs = exports.TransactionInputs = exports.Keys = exports.KeyPair = exports.KeyOutput = exports.KeyInput = exports.ICryptoNote = exports.WalletAPI = exports.NinjaCoind = exports.LegacyNinjaCoind = exports.Transaction = exports.ParentBlock = exports.MultisigMessage = exports.Multisig = exports.LevinPayloads = exports.LevinProtocol = exports.LevinPacket = exports.LedgerNote = exports.LedgerTransport = exports.LedgerDevice = exports.CryptoNote = exports.CryptoType = exports.Crypto = exports.BlockTemplate = exports.Block = exports.AddressPrefix = exports.Address = void 0;
 const turtlecoin_crypto_1 = require("turtlecoin-crypto");
 /** @ignore */
 const Types = require("./Types");
@@ -38,10 +38,10 @@ var ParentBlock_1 = require("./ParentBlock");
 Object.defineProperty(exports, "ParentBlock", { enumerable: true, get: function () { return ParentBlock_1.ParentBlock; } });
 var Transaction_1 = require("./Transaction");
 Object.defineProperty(exports, "Transaction", { enumerable: true, get: function () { return Transaction_1.Transaction; } });
-var LegacyTurtleCoind_1 = require("./LegacyTurtleCoind");
-Object.defineProperty(exports, "LegacyTurtleCoind", { enumerable: true, get: function () { return LegacyTurtleCoind_1.LegacyTurtleCoind; } });
-var TurtleCoind_1 = require("./TurtleCoind");
-Object.defineProperty(exports, "TurtleCoind", { enumerable: true, get: function () { return TurtleCoind_1.TurtleCoind; } });
+var LegacyNinjaCoind_1 = require("./LegacyNinjaCoind");
+Object.defineProperty(exports, "LegacyNinjaCoind", { enumerable: true, get: function () { return LegacyNinjaCoind_1.LegacyNinjaCoind; } });
+var NinjaCoind_1 = require("./NinjaCoind");
+Object.defineProperty(exports, "NinjaCoind", { enumerable: true, get: function () { return NinjaCoind_1.NinjaCoind; } });
 var WalletAPI_1 = require("./WalletAPI");
 Object.defineProperty(exports, "WalletAPI", { enumerable: true, get: function () { return WalletAPI_1.WalletAPI; } });
 /** @ignore */
@@ -73,8 +73,8 @@ var LedgerErrorCode = Types.LedgerTypes.ErrorCode;
 exports.LedgerErrorCode = LedgerErrorCode;
 var ICryptoNote = Types.CryptoNoteInterfaces.ICryptoNote;
 exports.ICryptoNote = ICryptoNote;
-var TurtleCoindTypes = Types.TurtleCoindTypes;
-exports.TurtleCoindTypes = TurtleCoindTypes;
+var NinjaCoindTypes = Types.NinjaCoindTypes;
+exports.NinjaCoindTypes = NinjaCoindTypes;
 /**
  * Executes the callback method upon the given event
  * @param event

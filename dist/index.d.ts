@@ -16,8 +16,8 @@ export { MultisigMessage } from './MultisigMessage';
 export { ParentBlock } from './ParentBlock';
 export { Transaction } from './Transaction';
 export { ICoinConfig } from './Config';
-export { LegacyTurtleCoind } from './LegacyTurtleCoind';
-export { TurtleCoind } from './TurtleCoind';
+export { LegacyNinjaCoind } from './LegacyNinjaCoind';
+export { NinjaCoind } from './NinjaCoind';
 export { WalletAPI } from './WalletAPI';
 /** @ignore */
 import TransactionOutputs = Types.TransactionOutputs;
@@ -38,10 +38,10 @@ import LedgerTransactionState = Types.LedgerTypes.TransactionState;
 /** @ignore */
 import LedgerErrorCode = Types.LedgerTypes.ErrorCode;
 import ICryptoNote = Types.CryptoNoteInterfaces.ICryptoNote;
-import TurtleCoindTypes = Types.TurtleCoindTypes;
+import NinjaCoindTypes = Types.NinjaCoindTypes;
 import WalletAPITypes = Types.WalletAPITypes;
 /** @ignore */
-export { ICryptoNote, KeyInput, KeyOutput, KeyPair, Keys, TransactionInputs, TransactionOutputs, LedgerError, LedgerTransactionState, LedgerErrorCode, TurtleCoindTypes, WalletAPITypes };
+export { ICryptoNote, KeyInput, KeyOutput, KeyPair, Keys, TransactionInputs, TransactionOutputs, LedgerError, LedgerTransactionState, LedgerErrorCode, NinjaCoindTypes, WalletAPITypes };
 /**
  * Executes the callback method upon the given event
  * @param event

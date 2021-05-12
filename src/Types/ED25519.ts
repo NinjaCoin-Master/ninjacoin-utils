@@ -3,7 +3,7 @@
 // Please see the included LICENSE file for more information.
 
 import { Config } from '../Config';
-import { TurtleCoinCrypto } from '../Types';
+import { NinjaCoinCrypto } from '../Types';
 import { randomBytes } from 'crypto';
 
 export namespace ED25519 {
@@ -39,11 +39,11 @@ export namespace ED25519 {
             /* If no entropy was supplied, we'll go find our own */
             entropy = entropy || rand(256);
 
-            if (publicKey && await TurtleCoinCrypto.checkKey(publicKey)) {
+            if (publicKey && await NinjaCoinCrypto.checkKey(publicKey)) {
                 pair.m_publicKey = publicKey;
             }
 
-            if (privateKey && await TurtleCoinCrypto.checkScalar(privateKey)) {
+            if (privateKey && await NinjaCoinCrypto.checkScalar(privateKey)) {
                 pair.m_privateKey = privateKey;
             }
 
@@ -58,13 +58,13 @@ export namespace ED25519 {
                     we are probably looking to generate the deterministic view key for the
                     specified private spend key */
                 if (iterations && iterations === 1) {
-                    const temp = await TurtleCoinCrypto.cn_fast_hash(
+                    const temp = await NinjaCoinCrypto.cn_fast_hash(
                         pair.m_privateKey);
 
                     await pair.setPrivateKey(temp);
                 }
 
-                pair.m_publicKey = await TurtleCoinCrypto.secretKeyToPublicKey(pair.m_privateKey);
+                pair.m_publicKey = await NinjaCoinCrypto.secretKeyToPublicKey(pair.m_privateKey);
             }
 
             return pair;
@@ -83,9 +83,9 @@ export namespace ED25519 {
          */
         public async setPrivateKey (key: string): Promise<void> {
             try {
-                this.m_privateKey = (await TurtleCoinCrypto.checkScalar(key))
+                this.m_privateKey = (await NinjaCoinCrypto.checkScalar(key))
                     ? key
-                    : await TurtleCoinCrypto.scReduce32(key);
+                    : await NinjaCoinCrypto.scReduce32(key);
             } catch (e) {
                 this.m_publicKey = key;
             }
@@ -107,7 +107,7 @@ export namespace ED25519 {
 
             // Try to verify that it is a public key via the library
             try {
-                isPubKey = await TurtleCoinCrypto.checkKey(key);
+                isPubKey = await NinjaCoinCrypto.checkKey(key);
             } catch (e) {
                 // If the library could not process this, then set the key anyway
                 this.m_publicKey = key;
@@ -130,7 +130,7 @@ export namespace ED25519 {
                 return false;
             }
 
-            return (await TurtleCoinCrypto.secretKeyToPublicKey(this.privateKey) === this.publicKey);
+            return (await NinjaCoinCrypto.secretKeyToPublicKey(this.privateKey) === this.publicKey);
         }
     }
 
@@ -209,7 +209,7 @@ async function simpleKdf (value: string, iterations: number): Promise<string> {
     /** This is a very simple implementation of a pseudo PBKDF2 function */
     let hex = Buffer.from(value).toString('hex');
     for (let i = 0; i < iterations; i++) {
-        hex = await TurtleCoinCrypto.cn_fast_hash(hex);
+        hex = await NinjaCoinCrypto.cn_fast_hash(hex);
     }
     return hex;
 }

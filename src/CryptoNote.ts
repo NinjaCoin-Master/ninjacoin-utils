@@ -11,7 +11,7 @@ import {
     ED25519,
     TransactionInputs,
     TransactionOutputs,
-    TurtleCoinCrypto,
+    NinjaCoinCrypto,
     Interfaces,
     CryptoNoteInterfaces,
     ICryptoConfig
@@ -47,7 +47,7 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
         }
 
         if (cryptoConfig) {
-            TurtleCoinCrypto.userCryptoFunctions = cryptoConfig;
+            NinjaCoinCrypto.userCryptoFunctions = cryptoConfig;
         }
     }
 
@@ -114,11 +114,11 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
      * The current cryptographic primitives configuration
      */
     public get cryptoConfig (): ICryptoConfig {
-        return TurtleCoinCrypto.userCryptoFunctions;
+        return NinjaCoinCrypto.userCryptoFunctions;
     }
 
     public set cryptoConfig (config: ICryptoConfig) {
-        TurtleCoinCrypto.userCryptoFunctions = config;
+        NinjaCoinCrypto.userCryptoFunctions = config;
     }
 
     /**
@@ -160,7 +160,7 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
         transactionPublicKey: string,
         privateViewKey: string
     ): Promise<string> {
-        return TurtleCoinCrypto.generateKeyDerivation(
+        return NinjaCoinCrypto.generateKeyDerivation(
             transactionPublicKey, privateViewKey);
     }
 
@@ -181,7 +181,7 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
         privateSpendKey: string,
         outputIndex: number
     ): Promise<CryptoNoteInterfaces.IKeyImage> {
-        const derivation = await TurtleCoinCrypto.generateKeyDerivation(transactionPublicKey, privateViewKey);
+        const derivation = await NinjaCoinCrypto.generateKeyDerivation(transactionPublicKey, privateViewKey);
 
         return this.generateKeyImagePrimitive(publicSpendKey, privateSpendKey, outputIndex, derivation);
     }
@@ -201,11 +201,11 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
         outputIndex: number,
         derivation: string
     ): Promise<CryptoNoteInterfaces.IKeyImage> {
-        const publicEphemeral = await TurtleCoinCrypto.derivePublicKey(derivation, outputIndex, publicSpendKey);
+        const publicEphemeral = await NinjaCoinCrypto.derivePublicKey(derivation, outputIndex, publicSpendKey);
 
-        const privateEphemeral = await TurtleCoinCrypto.deriveSecretKey(derivation, outputIndex, privateSpendKey);
+        const privateEphemeral = await NinjaCoinCrypto.deriveSecretKey(derivation, outputIndex, privateSpendKey);
 
-        const keyImage = await TurtleCoinCrypto.generateKeyImage(publicEphemeral, privateEphemeral);
+        const keyImage = await NinjaCoinCrypto.generateKeyImage(publicEphemeral, privateEphemeral);
 
         return {
             publicEphemeral: publicEphemeral,
@@ -221,7 +221,7 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
      * @returns the public key
      */
     public async privateKeyToPublicKey (privateKey: string): Promise<string> {
-        return TurtleCoinCrypto.secretKeyToPublicKey(privateKey);
+        return NinjaCoinCrypto.secretKeyToPublicKey(privateKey);
     }
 
     /**
@@ -291,9 +291,9 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
         privateSpendKey?: string,
         generatePartial?: boolean
     ): Promise<Interfaces.Output> {
-        const derivedKey = await TurtleCoinCrypto.generateKeyDerivation(transactionPublicKey, privateViewKey);
+        const derivedKey = await NinjaCoinCrypto.generateKeyDerivation(transactionPublicKey, privateViewKey);
 
-        const publicEphemeral = await TurtleCoinCrypto.derivePublicKey(derivedKey, output.index, publicSpendKey);
+        const publicEphemeral = await NinjaCoinCrypto.derivePublicKey(derivedKey, output.index, publicSpendKey);
 
         if (publicEphemeral === output.key) {
             output.input = {
@@ -312,16 +312,16 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
                  */
                 const privateEphemeral = (generatePartial)
                     ? privateSpendKey
-                    : await TurtleCoinCrypto.deriveSecretKey(
+                    : await NinjaCoinCrypto.deriveSecretKey(
                         derivedKey, output.index, privateSpendKey);
 
-                const derivedPublicEphemeral = await TurtleCoinCrypto.secretKeyToPublicKey(privateEphemeral);
+                const derivedPublicEphemeral = await NinjaCoinCrypto.secretKeyToPublicKey(privateEphemeral);
 
                 if (derivedPublicEphemeral !== publicEphemeral && !generatePartial) {
                     throw new Error('Incorrect private spend key supplied');
                 }
 
-                const keyImage = await TurtleCoinCrypto.generateKeyImage(publicEphemeral, privateEphemeral);
+                const keyImage = await NinjaCoinCrypto.generateKeyImage(publicEphemeral, privateEphemeral);
 
                 output.input.privateEphemeral = privateEphemeral;
 
@@ -460,13 +460,13 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
             message = JSON.stringify(message);
         }
 
-        const publicKey = await TurtleCoinCrypto.secretKeyToPublicKey(privateKey);
+        const publicKey = await NinjaCoinCrypto.secretKeyToPublicKey(privateKey);
 
         const hex = Buffer.from(message);
 
-        const hash = await TurtleCoinCrypto.cn_fast_hash(hex.toString('hex'));
+        const hash = await NinjaCoinCrypto.cn_fast_hash(hex.toString('hex'));
 
-        return TurtleCoinCrypto.generateSignature(hash, publicKey, privateKey);
+        return NinjaCoinCrypto.generateSignature(hash, publicKey, privateKey);
     }
 
     /**
@@ -484,9 +484,9 @@ export class CryptoNote extends EventEmitter implements ICryptoNote {
 
         const hex = Buffer.from(message);
 
-        const hash = await TurtleCoinCrypto.cn_fast_hash(hex.toString('hex'));
+        const hash = await NinjaCoinCrypto.cn_fast_hash(hex.toString('hex'));
 
-        return TurtleCoinCrypto.checkSignature(hash, publicKey, signature);
+        return NinjaCoinCrypto.checkSignature(hash, publicKey, signature);
     }
 
     /**
@@ -922,7 +922,7 @@ async function checkRingSignatures (
     publicKeys: string[],
     signatures: string[]
 ): Promise<boolean> {
-    return TurtleCoinCrypto.checkRingSignatures(hash, keyImage, publicKeys, signatures);
+    return NinjaCoinCrypto.checkRingSignatures(hash, keyImage, publicKeys, signatures);
 }
 
 /** @ignore */
@@ -934,7 +934,7 @@ async function generateRingSignatures (
     realOutputIndex: number,
     index: number
 ): Promise<Interfaces.GeneratedRingSignatures> {
-    const signatures = await TurtleCoinCrypto.generateRingSignatures(
+    const signatures = await NinjaCoinCrypto.generateRingSignatures(
         hash,
         keyImage,
         publicKeys,
@@ -962,7 +962,7 @@ async function prepareRingSignatures (
     tx_public_key: string,
     randomKey?: string
 ): Promise<Interfaces.PreparedRingSignature> {
-    const prepped = await TurtleCoinCrypto.prepareRingSignatures(
+    const prepped = await NinjaCoinCrypto.prepareRingSignatures(
         hash, keyImage, publicKeys, realOutputIndex, randomKey);
 
     return {
@@ -989,9 +989,9 @@ async function completeRingSignatures (
     sigs: string[],
     index: number
 ): Promise<Interfaces.GeneratedRingSignatures> {
-    const privateEphemeral = await TurtleCoinCrypto.deriveSecretKey(derivation, outputIndex, privateSpendKey);
+    const privateEphemeral = await NinjaCoinCrypto.deriveSecretKey(derivation, outputIndex, privateSpendKey);
 
-    const signatures = await TurtleCoinCrypto.completeRingSignatures(privateEphemeral, realOutputIndex, key, sigs);
+    const signatures = await NinjaCoinCrypto.completeRingSignatures(privateEphemeral, realOutputIndex, key, sigs);
 
     return { signatures, index };
 }
@@ -1092,9 +1092,9 @@ async function prepareTransactionOutputs (outputs: Interfaces.GeneratedOutput[])
         amount: number,
         index: number,
         privateKey: string): Promise<Interfaces.PreparedOutput> {
-        const outDerivation = await TurtleCoinCrypto.generateKeyDerivation(destination.view.publicKey, privateKey);
+        const outDerivation = await NinjaCoinCrypto.generateKeyDerivation(destination.view.publicKey, privateKey);
 
-        const outPublicEphemeral = await TurtleCoinCrypto.derivePublicKey(
+        const outPublicEphemeral = await NinjaCoinCrypto.derivePublicKey(
             outDerivation,
             index,
             destination.spend.publicKey);
@@ -1105,7 +1105,7 @@ async function prepareTransactionOutputs (outputs: Interfaces.GeneratedOutput[])
         };
     }
 
-    const keys = await TurtleCoinCrypto.generateKeys();
+    const keys = await NinjaCoinCrypto.generateKeys();
 
     const transactionKeys: ED25519.KeyPair = await ED25519.KeyPair.from(keys.public_key, keys.private_key);
 

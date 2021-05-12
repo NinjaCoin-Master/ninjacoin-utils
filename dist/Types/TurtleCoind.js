@@ -3,13 +3,13 @@
 //
 // Please see the included LICENSE file for more information.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TurtleCoindTypes = void 0;
-var TurtleCoindTypes;
-(function (TurtleCoindTypes) {
+exports.NinjaCoindTypes = void 0;
+var NinjaCoindTypes;
+(function (NinjaCoindTypes) {
     /**
-     * Defines the necessary methods that must be implemented by a TurtleCoind interface
+     * Defines the necessary methods that must be implemented by a NinjaCoind interface
      */
-    class ITurtleCoind {
+    class INinjaCoind {
     }
-    TurtleCoindTypes.ITurtleCoind = ITurtleCoind;
-})(TurtleCoindTypes = exports.TurtleCoindTypes || (exports.TurtleCoindTypes = {}));
+    NinjaCoindTypes.INinjaCoind = INinjaCoind;
+})(NinjaCoindTypes = exports.NinjaCoindTypes || (exports.NinjaCoindTypes = {}));

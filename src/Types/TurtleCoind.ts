@@ -4,7 +4,7 @@
 
 import * as BigInteger from 'big-integer';
 
-export namespace TurtleCoindTypes {
+export namespace NinjaCoindTypes {
     export interface IVersion {
         /**
          * The major version number
@@ -715,9 +715,9 @@ export namespace TurtleCoindTypes {
     }
 
     /**
-     * Defines the necessary methods that must be implemented by a TurtleCoind interface
+     * Defines the necessary methods that must be implemented by a NinjaCoind interface
      */
-    export abstract class ITurtleCoind {
+    export abstract class INinjaCoind {
         public abstract fee(): Promise<IFee>;
 
         public abstract height(): Promise<IHeight>;

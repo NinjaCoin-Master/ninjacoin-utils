@@ -3,8 +3,8 @@
 // Please see the included LICENSE file for more information.
 
 import { HTTPClient } from './Helpers/HTTPClient';
-import { LegacyTurtleCoindTypes } from './Types/LegacyTurtleCoind';
-import { TurtleCoindTypes } from './Types/TurtleCoind';
+import { LegacyNinjaCoindTypes } from './Types/LegacyNinjaCoind';
+import { NinjaCoindTypes } from './Types/NinjaCoind';
 import * as BigInteger from 'big-integer';
 import { Block } from './Block';
 import { Transaction } from './Transaction';
@@ -21,15 +21,15 @@ import CoinbaseInput = TransactionInputs.CoinbaseInput;
 import KeyInput = TransactionInputs.KeyInput;
 
 /**
- * A class interface that allows for easy interaction with Legacy TurtleCoind
+ * A class interface that allows for easy interaction with Legacy NinjaCoind
  * THIS OBJECT IS DEPRECATED AND SUBJECT TO REMOVAL WITH LITTLE NOTICE
  */
-export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.ITurtleCoind {
+export class LegacyNinjaCoind extends HTTPClient implements NinjaCoindTypes.INinjaCoind {
     /**
      * Retrieves the node fee information
      */
-    public async fee (): Promise<TurtleCoindTypes.IFee> {
-        const response: LegacyTurtleCoindTypes.IFeeResponse = await this.get('fee');
+    public async fee (): Promise<NinjaCoindTypes.IFee> {
+        const response: LegacyNinjaCoindTypes.IFeeResponse = await this.get('fee');
 
         return {
             address: response.address,
@@ -40,8 +40,8 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     /**
      * Retrieves the node height information
      */
-    public async height (): Promise<TurtleCoindTypes.IHeight> {
-        const response: LegacyTurtleCoindTypes.IHeightResponse = await this.get('height');
+    public async height (): Promise<NinjaCoindTypes.IHeight> {
+        const response: LegacyNinjaCoindTypes.IHeightResponse = await this.get('height');
 
         return {
             height: response.height,
@@ -52,10 +52,10 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     /**
      * Retrieves the node information
      */
-    public async info (): Promise<TurtleCoindTypes.IInfo> {
-        const response: LegacyTurtleCoindTypes.IInfoResponse = await this.get('info');
+    public async info (): Promise<NinjaCoindTypes.IInfo> {
+        const response: LegacyNinjaCoindTypes.IInfoResponse = await this.get('info');
 
-        const parse = (elem: string): TurtleCoindTypes.IVersion => {
+        const parse = (elem: string): NinjaCoindTypes.IVersion => {
             const [major, minor, patch] = elem.split('.')
                 .map(elem => parseInt(elem, 10));
 
@@ -88,8 +88,8 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     /**
      * Retrieves the node peer information
      */
-    public async peers (): Promise<TurtleCoindTypes.IPeers> {
-        const response: LegacyTurtleCoindTypes.IPeersResponse = await this.get('peers');
+    public async peers (): Promise<NinjaCoindTypes.IPeers> {
+        const response: LegacyNinjaCoindTypes.IPeersResponse = await this.get('peers');
 
         const parse = (elem: string): { host: string, port: number } => {
             const [host, port] = elem.split(':');
@@ -117,17 +117,17 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Requires the daemon to have the explorer enabled
      * @param block the block height or hash
      */
-    public async block (block: string | number): Promise<TurtleCoindTypes.IBlock> {
+    public async block (block: string | number): Promise<NinjaCoindTypes.IBlock> {
         if (typeof block === 'number') {
             const header = await this._blockHeaderByHeight(block);
 
             block = header.hash;
         }
 
-        const response: LegacyTurtleCoindTypes.IBlockSummary = await this.rpcPost('f_block_json', { hash: block })
+        const response: LegacyNinjaCoindTypes.IBlockSummary = await this.rpcPost('f_block_json', { hash: block })
             .then(response => response.block);
 
-        const result: TurtleCoindTypes.IBlock = {
+        const result: NinjaCoindTypes.IBlock = {
             alreadyGeneratedCoins: BigInteger(response.alreadyGeneratedCoins),
             alreadyGeneratedTransactions: response.alreadyGeneratedTransactions,
             baseReward: response.baseReward,
@@ -166,7 +166,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     /**
      * Retrieves the block information for the last block available
      */
-    public async lastBlock (): Promise<TurtleCoindTypes.IBlock> {
+    public async lastBlock (): Promise<NinjaCoindTypes.IBlock> {
         const response = await this._lastBlockHeader();
 
         return this.block(response.hash);
@@ -177,10 +177,10 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Requires the daemon to have the explorer enabled
      * @param height the height to stop at
      */
-    public async blockHeaders (height: number): Promise<TurtleCoindTypes.IBlock[]> {
+    public async blockHeaders (height: number): Promise<NinjaCoindTypes.IBlock[]> {
         const response = await this._blockShortHeaders(height);
 
-        const promises: Promise<TurtleCoindTypes.IBlock>[] = response.map(block => this.block(block.hash));
+        const promises: Promise<NinjaCoindTypes.IBlock>[] = response.map(block => this.block(block.hash));
 
         return Promise.all(promises)
             .then(results => results.sort((a, b) => (a.height > b.height) ? 1 : -1));
@@ -191,8 +191,8 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Requires the daemon to have the explorer enabled
      * @param block the block height or hash
      */
-    public async rawBlock (block: string | number): Promise<TurtleCoindTypes.IRawBlock> {
-        let header: LegacyTurtleCoindTypes.IBlockHeader;
+    public async rawBlock (block: string | number): Promise<NinjaCoindTypes.IRawBlock> {
+        let header: LegacyNinjaCoindTypes.IBlockHeader;
 
         try {
             if (typeof block === 'number') {
@@ -221,8 +221,8 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     public async blockTemplate (
         address: string,
         reserveSize = 8
-    ): Promise<TurtleCoindTypes.IBlockTemplate> {
-        const response: LegacyTurtleCoindTypes.IBlockTemplate = await this.rpcPost(
+    ): Promise<NinjaCoindTypes.IBlockTemplate> {
+        const response: LegacyNinjaCoindTypes.IBlockTemplate = await this.rpcPost(
             'getblocktemplate', { reserve_size: reserveSize, wallet_address: address });
 
         return {
@@ -270,10 +270,10 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Requires the daemon to have the explorer enabled
      * @param hash the transaction hash
      */
-    public async transaction (hash: string): Promise<TurtleCoindTypes.ITransaction> {
+    public async transaction (hash: string): Promise<NinjaCoindTypes.ITransaction> {
         const response = await this._transaction(hash);
 
-        const toOutput = (output: LegacyTurtleCoindTypes.IOutputKey): TurtleCoindTypes.ITransactionOutputKey => {
+        const toOutput = (output: LegacyNinjaCoindTypes.IOutputKey): NinjaCoindTypes.ITransactionOutputKey => {
             return {
                 amount: output.amount,
                 key: output.target.data.key,
@@ -282,7 +282,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
         };
 
         const toCoinbaseInput =
-            (input: LegacyTurtleCoindTypes.IInputCoinbase): TurtleCoindTypes.ITransactionInputCoinbase => {
+            (input: LegacyNinjaCoindTypes.IInputCoinbase): NinjaCoindTypes.ITransactionInputCoinbase => {
                 return {
                     height: input.value.height,
                     type: input.type
@@ -290,7 +290,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
             };
 
         const toKeyInput =
-            (input: LegacyTurtleCoindTypes.IInputKey): TurtleCoindTypes.ITransactionInputKey => {
+            (input: LegacyNinjaCoindTypes.IInputKey): NinjaCoindTypes.ITransactionInputKey => {
                 return {
                     amount: input.value.amount,
                     keyImage: input.value.k_image,
@@ -306,10 +306,10 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
             switch (input.type) {
                 case 'ff':
                     coinbase = true;
-                    inputs.push(toCoinbaseInput(input as LegacyTurtleCoindTypes.IInputCoinbase));
+                    inputs.push(toCoinbaseInput(input as LegacyNinjaCoindTypes.IInputCoinbase));
                     break;
                 case '02':
-                    inputs.push(toKeyInput(input as LegacyTurtleCoindTypes.IInputKey));
+                    inputs.push(toKeyInput(input as LegacyNinjaCoindTypes.IInputKey));
                     break;
             }
         }
@@ -351,8 +351,8 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
             prefix: {
                 extra: response.tx.extra,
                 inputs: (coinbase)
-                    ? inputs as TurtleCoindTypes.ITransactionInputCoinbase[]
-                    : inputs as TurtleCoindTypes.ITransactionInputKey[],
+                    ? inputs as NinjaCoindTypes.ITransactionInputCoinbase[]
+                    : inputs as NinjaCoindTypes.ITransactionInputKey[],
                 outputs: response.tx.vout.map(output => toOutput(output)),
                 unlockTime: response.tx.unlock_time,
                 version: response.tx.version
@@ -402,7 +402,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Requires the daemon to have the explorer enabled
      * in the memory pool
      */
-    public async transactionPool (): Promise<TurtleCoindTypes.TransactionSummary[]> {
+    public async transactionPool (): Promise<NinjaCoindTypes.TransactionSummary[]> {
         const response = await this._transactionPool();
 
         return response.map(tx => {
@@ -432,10 +432,10 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     public async transactionPoolChanges (
         lastKnownBlock: string,
         transactions: string[] = []
-    ): Promise<TurtleCoindTypes.ITransactionPoolDelta> {
+    ): Promise<NinjaCoindTypes.ITransactionPoolDelta> {
         const response = await this._poolChanges(lastKnownBlock, transactions);
 
-        const result: TurtleCoindTypes.ITransactionPoolDelta = {
+        const result: NinjaCoindTypes.ITransactionPoolDelta = {
             added: [],
             deleted: response.deletedTxsIds,
             synced: response.isTailBlockActual
@@ -450,19 +450,19 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
 
             await tx.parseExtra(Buffer.from(added.prefix.extra, 'hex'));
 
-            const addCoinbase = (input: LegacyTurtleCoindTypes.IInputCoinbase) =>
+            const addCoinbase = (input: LegacyNinjaCoindTypes.IInputCoinbase) =>
                 tx.inputs.push(new CoinbaseInput(input.value.height));
 
-            const addKeyInput = (input: LegacyTurtleCoindTypes.IInputKey) =>
+            const addKeyInput = (input: LegacyNinjaCoindTypes.IInputKey) =>
                 tx.inputs.push(new KeyInput(input.value.amount, input.value.key_offsets, input.value.k_image));
 
             for (const input of added.prefix.vin) {
                 switch (input.type) {
                     case 'ff':
-                        addCoinbase(input as LegacyTurtleCoindTypes.IInputCoinbase);
+                        addCoinbase(input as LegacyNinjaCoindTypes.IInputCoinbase);
                         break;
                     case '02':
-                        addKeyInput(input as LegacyTurtleCoindTypes.IInputKey);
+                        addKeyInput(input as LegacyNinjaCoindTypes.IInputKey);
                         break;
                 }
             }
@@ -483,7 +483,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Retrieves information on where the specified transactions are located
      * @param transactions an array of transaction hashes
      */
-    public async transactionsStatus (transactions: string[]): Promise<TurtleCoindTypes.ITransactionsStatus> {
+    public async transactionsStatus (transactions: string[]): Promise<NinjaCoindTypes.ITransactionsStatus> {
         const response = await this._transactionStatus(transactions);
 
         return {
@@ -499,10 +499,10 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * @param amounts an array of amounts for which we need random global indexes
      * @param count the number of global indexes to return for each amount
      */
-    public async randomIndexes (amounts: number[], count: number): Promise<TurtleCoindTypes.IRandomOutput[]> {
+    public async randomIndexes (amounts: number[], count: number): Promise<NinjaCoindTypes.IRandomOutput[]> {
         const response = await this._randomOutputs(amounts, count);
 
-        const results: TurtleCoindTypes.IRandomOutput[] = [];
+        const results: NinjaCoindTypes.IRandomOutput[] = [];
 
         for (const out of response.outs) {
             results.push({
@@ -524,11 +524,11 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * @param startHeight the starting block height
      * @param endHeight the ending block height
      */
-    public async indexes (startHeight: number, endHeight: number): Promise<TurtleCoindTypes.ITransactionIndexes[]> {
+    public async indexes (startHeight: number, endHeight: number): Promise<NinjaCoindTypes.ITransactionIndexes[]> {
         // we +1 the endHeight here because daemon version < 1.0.0 is not inclusive of the end
         const response = await this._globalIndexesForRange(startHeight, endHeight + 1);
 
-        const results: TurtleCoindTypes.ITransactionIndexes[] = [];
+        const results: NinjaCoindTypes.ITransactionIndexes[] = [];
 
         for (const tx of response) {
             results.push({
@@ -554,16 +554,16 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
         timestamp = 0,
         skipCoinbaseTransactions = false,
         count = 100
-    ): Promise<TurtleCoindTypes.ISync> {
+    ): Promise<NinjaCoindTypes.ISync> {
         const response = await this._walletSyncData(height, timestamp, checkpoints, skipCoinbaseTransactions, count);
 
-        const result: TurtleCoindTypes.ISync = {
+        const result: NinjaCoindTypes.ISync = {
             blocks: [],
             synced: response.synced
         };
 
         for (const block of response.items) {
-            const b: TurtleCoindTypes.ISyncBlock = {
+            const b: NinjaCoindTypes.ISyncBlock = {
                 hash: block.blockHash,
                 height: block.blockHeight,
                 timestamp: new Date(block.blockTimestamp),
@@ -623,17 +623,17 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
         timestamp = 0,
         skipCoinbaseTransactions = false,
         count = 100
-    ): Promise<TurtleCoindTypes.IRawSync> {
+    ): Promise<NinjaCoindTypes.IRawSync> {
         const response = await this._rawBlocks(height, timestamp, checkpoints, skipCoinbaseTransactions, count);
 
-        const toRawBlock = (rawBlock: LegacyTurtleCoindTypes.IRawBlock): TurtleCoindTypes.IRawBlock => {
+        const toRawBlock = (rawBlock: LegacyNinjaCoindTypes.IRawBlock): NinjaCoindTypes.IRawBlock => {
             return {
                 blob: rawBlock.block,
                 transactions: rawBlock.transactions
             };
         };
 
-        const result: TurtleCoindTypes.IRawSync = {
+        const result: NinjaCoindTypes.IRawSync = {
             blocks: response.items.map(block => toRawBlock(block)),
             synced: response.synced
         };
@@ -654,7 +654,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     /**
      * Retrieves the last block header information
      */
-    private async _lastBlockHeader (): Promise<LegacyTurtleCoindTypes.IBlockHeader> {
+    private async _lastBlockHeader (): Promise<LegacyNinjaCoindTypes.IBlockHeader> {
         const response = await this.rpcPost('getlastblockheader');
 
         return response.block_header;
@@ -664,7 +664,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Retrieves the block header information by hash
      * @param hash the hash of the block to retrieve the header for
      */
-    private async _blockHeaderByHash (hash: string): Promise<LegacyTurtleCoindTypes.IBlockHeader> {
+    private async _blockHeaderByHash (hash: string): Promise<LegacyNinjaCoindTypes.IBlockHeader> {
         const response = await this.rpcPost('getblockheaderbyhash', { hash });
 
         return response.block_header;
@@ -674,7 +674,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Retrieves the block header by the height
      * @param height the height of the block to retrieve the header for
      */
-    private async _blockHeaderByHeight (height: number): Promise<LegacyTurtleCoindTypes.IBlockHeader> {
+    private async _blockHeaderByHeight (height: number): Promise<LegacyNinjaCoindTypes.IBlockHeader> {
         const response = await this.rpcPost('getblockheaderbyheight', { height });
 
         return response.block_header;
@@ -684,7 +684,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Retrieves abbreviated block information for the last 31 blocks before the specified height (inclusive)
      * @param height the height of the block to retrieve
      */
-    private async _blockShortHeaders (height: number): Promise<LegacyTurtleCoindTypes.IBlockShortHeader[]> {
+    private async _blockShortHeaders (height: number): Promise<LegacyNinjaCoindTypes.IBlockShortHeader[]> {
         const response = await this.rpcPost('f_blocks_list_json', { height });
 
         return response.blocks;
@@ -701,7 +701,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     private async _globalIndexesForRange (
         startHeight: number,
         endHeight: number
-    ): Promise<LegacyTurtleCoindTypes.IGlobalIndexesResponse[]> {
+    ): Promise<LegacyNinjaCoindTypes.IGlobalIndexesResponse[]> {
         const response = await this.post('get_global_indexes_for_range', { startHeight, endHeight });
 
         if (!response.status || !response.indexes) { throw new Error('Missing indexes or status key'); }
@@ -718,7 +718,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     private async _poolChanges (
         tailBlockHash: string,
         knownTransactionHashes: string[] = []
-    ): Promise<LegacyTurtleCoindTypes.IPoolChanges> {
+    ): Promise<LegacyNinjaCoindTypes.IPoolChanges> {
         const body: any = {
             tailBlockId: tailBlockHash
         };
@@ -727,7 +727,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
 
         const response = await this.post('get_pool_changes_lite', body);
 
-        const tmp: LegacyTurtleCoindTypes.IBlockLiteTransaction[] = [];
+        const tmp: LegacyNinjaCoindTypes.IBlockLiteTransaction[] = [];
 
         for (const tx of response.addedTxs) {
             tmp.push({
@@ -753,7 +753,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     private async _randomOutputs (
         amounts: number[],
         mixin = 1
-    ): Promise<LegacyTurtleCoindTypes.IRandomOutputsResponse> {
+    ): Promise<LegacyNinjaCoindTypes.IRandomOutputsResponse> {
         return this.post('getrandom_outs', {
             amounts: amounts,
             outs_count: mixin
@@ -782,7 +782,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
         blockHashCheckpoints: string[] = [],
         skipCoinbaseTransactions = false,
         blockCount = 100
-    ): Promise<LegacyTurtleCoindTypes.IRawBlocksResponse> {
+    ): Promise<LegacyNinjaCoindTypes.IRawBlocksResponse> {
         return this.post('getrawblocks', {
             startHeight: startHeight,
             startTimestamp: startTimestamp,
@@ -798,7 +798,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      */
     private async _sendRawTransaction (
         transaction: string
-    ): Promise<LegacyTurtleCoindTypes.ISendRawTransactionResponse> {
+    ): Promise<LegacyNinjaCoindTypes.ISendRawTransactionResponse> {
         return this.post('sendrawtransaction', { tx_as_hex: transaction });
     }
 
@@ -806,7 +806,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      * Retrieves a single transaction's information
      * @param hash the hash of the transaction to retrieve
      */
-    private async _transaction (hash: string): Promise<LegacyTurtleCoindTypes.ITransactionResponse> {
+    private async _transaction (hash: string): Promise<LegacyNinjaCoindTypes.ITransactionResponse> {
         const response = await this.rpcPost('f_transaction_json', { hash });
 
         if (response.tx && response.tx['']) { delete response.tx['']; }
@@ -819,7 +819,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
     /**
      * Retrieves summary information of the transactions currently in the mempool
      */
-    private async _transactionPool (): Promise<LegacyTurtleCoindTypes.ITransactionSummary[]> {
+    private async _transactionPool (): Promise<LegacyNinjaCoindTypes.ITransactionSummary[]> {
         const response = await this.rpcPost('f_on_transactions_pool_json');
 
         return response.transactions;
@@ -831,7 +831,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
      */
     private async _transactionStatus (
         transactionHashes: string[]
-    ): Promise<LegacyTurtleCoindTypes.ITransactionStatusResponse> {
+    ): Promise<LegacyNinjaCoindTypes.ITransactionStatusResponse> {
         const response = await this.post('get_transactions_status', { transactionHashes });
 
         if (!response.status ||
@@ -869,7 +869,7 @@ export class LegacyTurtleCoind extends HTTPClient implements TurtleCoindTypes.IT
         blockHashCheckpoints: string[] = [],
         skipCoinbaseTransactions = false,
         blockCount = 100
-    ): Promise<LegacyTurtleCoindTypes.IWalletSyncData> {
+    ): Promise<LegacyNinjaCoindTypes.IWalletSyncData> {
         const response = await this.post('getwalletsyncdata', {
             startHeight: startHeight,
             startTimestamp: startTimestamp,

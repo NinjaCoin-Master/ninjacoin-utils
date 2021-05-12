@@ -88,7 +88,7 @@ class Transaction {
             const writer = new bytestream_1.Writer();
             writer.hash(this.recipientPublicSpendKey);
             writer.hash(this.recipientPublicViewKey);
-            return Types_1.TurtleCoinCrypto.cn_fast_hash(writer.blob);
+            return Types_1.NinjaCoinCrypto.cn_fast_hash(writer.blob);
         });
     }
     /**
@@ -156,9 +156,9 @@ class Transaction {
                 return this.m_cached.hash;
             }
             this.m_cached.blob = this.toString();
-            const hash = yield Types_1.TurtleCoinCrypto.cn_fast_hash(this.m_cached.blob);
+            const hash = yield Types_1.NinjaCoinCrypto.cn_fast_hash(this.m_cached.blob);
             if (this.version >= 2) {
-                const hash2 = yield Types_1.TurtleCoinCrypto.cn_fast_hash(hash + TransactionVersion2Suffix);
+                const hash2 = yield Types_1.NinjaCoinCrypto.cn_fast_hash(hash + TransactionVersion2Suffix);
                 this.m_cached.hash = hash2;
                 return hash2;
             }
@@ -261,9 +261,9 @@ class Transaction {
                 return this.m_cached.prefixHash;
             }
             this.m_cached.prefix = this.prefix;
-            const hash = yield Types_1.TurtleCoinCrypto.cn_fast_hash(this.m_cached.prefix);
+            const hash = yield Types_1.NinjaCoinCrypto.cn_fast_hash(this.m_cached.prefix);
             if (this.version >= 2) {
-                const hash2 = yield Types_1.TurtleCoinCrypto.cn_fast_hash(hash + TransactionVersion2Suffix);
+                const hash2 = yield Types_1.NinjaCoinCrypto.cn_fast_hash(hash + TransactionVersion2Suffix);
                 this.m_cached.prefixHash = hash2;
                 return hash2;
             }
@@ -447,7 +447,7 @@ class Transaction {
             this.m_readonly = true;
             this.m_rawExtra = extra;
             this.m_extra = readExtra(this.m_rawExtra);
-            if (this.publicKey && (yield Types_1.TurtleCoinCrypto.checkKey(this.publicKey))) {
+            if (this.publicKey && (yield Types_1.NinjaCoinCrypto.checkKey(this.publicKey))) {
                 yield this.transactionKeys.setPublicKey(this.publicKey);
             }
         });

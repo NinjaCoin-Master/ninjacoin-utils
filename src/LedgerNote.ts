@@ -14,7 +14,7 @@ import {
     LedgerTypes,
     TransactionInputs,
     TransactionOutputs,
-    TurtleCoinCrypto
+    NinjaCoinCrypto
 } from './Types';
 import { Common } from './Common';
 import { AddressPrefix } from './AddressPrefix';
@@ -69,7 +69,7 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
         }
 
         if (cryptoConfig) {
-            TurtleCoinCrypto.userCryptoFunctions = cryptoConfig;
+            NinjaCoinCrypto.userCryptoFunctions = cryptoConfig;
         }
     }
 
@@ -115,11 +115,11 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
      * The current cryptographic primitives configuration
      */
     public get cryptoConfig (): ICryptoConfig {
-        return TurtleCoinCrypto.userCryptoFunctions;
+        return NinjaCoinCrypto.userCryptoFunctions;
     }
 
     public set cryptoConfig (config: ICryptoConfig) {
-        TurtleCoinCrypto.userCryptoFunctions = config;
+        NinjaCoinCrypto.userCryptoFunctions = config;
     }
 
     /**
@@ -209,7 +209,7 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
 
         UNUSED(privateViewKey);
 
-        return TurtleCoinCrypto.generateKeyDerivation(
+        return NinjaCoinCrypto.generateKeyDerivation(
             transactionPublicKey, this.address.view.privateKey);
     }
 
@@ -238,7 +238,7 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
         UNUSED(publicSpendKey);
         UNUSED(privateSpendKey);
 
-        const derivation = await TurtleCoinCrypto.generateKeyDerivation(
+        const derivation = await NinjaCoinCrypto.generateKeyDerivation(
             transactionPublicKey, this.address.view.privateKey);
 
         return this.generateKeyImagePrimitive(undefined, undefined, outputIndex, derivation);
@@ -266,7 +266,7 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
         UNUSED(publicSpendKey);
         UNUSED(privateSpendKey);
 
-        const publicEphemeral = await TurtleCoinCrypto.derivePublicKey(
+        const publicEphemeral = await NinjaCoinCrypto.derivePublicKey(
             derivation, outputIndex, this.address.spend.publicKey);
 
         const result = await this.m_ledger.generateKeyImagePrimitive(
@@ -285,7 +285,7 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
      * @returns the public key
      */
     public async privateKeyToPublicKey (privateKey: string): Promise<string> {
-        return TurtleCoinCrypto.secretKeyToPublicKey(privateKey);
+        return NinjaCoinCrypto.secretKeyToPublicKey(privateKey);
     }
 
     /**
@@ -367,10 +367,10 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
         UNUSED(publicSpendKey);
         UNUSED(privateSpendKey);
 
-        const derivedKey = await TurtleCoinCrypto.generateKeyDerivation(transactionPublicKey,
+        const derivedKey = await NinjaCoinCrypto.generateKeyDerivation(transactionPublicKey,
             this.address.view.privateKey);
 
-        const publicEphemeral = await TurtleCoinCrypto.derivePublicKey(
+        const publicEphemeral = await NinjaCoinCrypto.derivePublicKey(
             derivedKey, output.index, this.address.spend.publicKey);
 
         if (publicEphemeral === output.key) {
@@ -525,7 +525,7 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
 
         const hex = Buffer.from(message);
 
-        const hash = await TurtleCoinCrypto.cn_fast_hash(hex.toString('hex'));
+        const hash = await NinjaCoinCrypto.cn_fast_hash(hex.toString('hex'));
 
         return this.m_ledger.generateSignature(hash, !this.m_config.ledgerDebug);
     }
@@ -545,9 +545,9 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
 
         const hex = Buffer.from(message);
 
-        const hash = await TurtleCoinCrypto.cn_fast_hash(hex.toString('hex'));
+        const hash = await NinjaCoinCrypto.cn_fast_hash(hex.toString('hex'));
 
-        return TurtleCoinCrypto.checkSignature(hash, publicKey, signature);
+        return NinjaCoinCrypto.checkSignature(hash, publicKey, signature);
     }
 
     /**
@@ -1073,7 +1073,7 @@ export class LedgerNote extends EventEmitter implements ICryptoNote {
                 throw new Error('Transactions must be prepared by this class');
             }
 
-            const public_ephemeral = await TurtleCoinCrypto.derivePublicKey(
+            const public_ephemeral = await NinjaCoinCrypto.derivePublicKey(
                 meta.input.derivation, meta.input.outputIndex, this.m_address.spend.publicKey);
 
             promises.push(completeRingSignatures(
@@ -1237,9 +1237,9 @@ async function prepareTransactionOutputs (
         index: number,
         privateKey: string
     ): Promise<Interfaces.PreparedOutput> {
-        const outDerivation = await TurtleCoinCrypto.generateKeyDerivation(destination.view.publicKey, privateKey);
+        const outDerivation = await NinjaCoinCrypto.generateKeyDerivation(destination.view.publicKey, privateKey);
 
-        const outPublicEphemeral = await TurtleCoinCrypto.derivePublicKey(
+        const outPublicEphemeral = await NinjaCoinCrypto.derivePublicKey(
             outDerivation,
             index,
             destination.spend.publicKey);
@@ -1283,7 +1283,7 @@ async function prepareRingSignatures (
     tx_public_key: string,
     randomKey?: string
 ): Promise<Interfaces.PreparedRingSignature> {
-    const prepped = await TurtleCoinCrypto.prepareRingSignatures(
+    const prepped = await NinjaCoinCrypto.prepareRingSignatures(
         hash, keyImage, publicKeys, realOutputIndex, randomKey);
 
     return {
@@ -1307,7 +1307,7 @@ async function checkRingSignatures (
     publicKeys: string[],
     signatures: string[]
 ): Promise<boolean> {
-    return TurtleCoinCrypto.checkRingSignatures(hash, keyImage, publicKeys, signatures);
+    return NinjaCoinCrypto.checkRingSignatures(hash, keyImage, publicKeys, signatures);
 }
 
 /** @ignore */

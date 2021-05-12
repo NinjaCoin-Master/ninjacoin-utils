@@ -12,7 +12,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LegacyTurtleCoind = void 0;
+exports.LegacyNinjaCoind = void 0;
 const HTTPClient_1 = require("./Helpers/HTTPClient");
 const BigInteger = require("big-integer");
 const Block_1 = require("./Block");
@@ -26,10 +26,10 @@ var CoinbaseInput = ITransactionInput_1.TransactionInputs.CoinbaseInput;
 /** @ignore */
 var KeyInput = ITransactionInput_1.TransactionInputs.KeyInput;
 /**
- * A class interface that allows for easy interaction with Legacy TurtleCoind
+ * A class interface that allows for easy interaction with Legacy NinjaCoind
  * THIS OBJECT IS DEPRECATED AND SUBJECT TO REMOVAL WITH LITTLE NOTICE
  */
-class LegacyTurtleCoind extends HTTPClient_1.HTTPClient {
+class LegacyNinjaCoind extends HTTPClient_1.HTTPClient {
     /**
      * Retrieves the node fee information
      */
@@ -795,4 +795,4 @@ class LegacyTurtleCoind extends HTTPClient_1.HTTPClient {
         });
     }
 }
-exports.LegacyTurtleCoind = LegacyTurtleCoind;
+exports.LegacyNinjaCoind = LegacyNinjaCoind;

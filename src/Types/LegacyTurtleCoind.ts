@@ -5,7 +5,7 @@
 import * as BigInteger from 'big-integer';
 
 /** @ignore */
-export namespace LegacyTurtleCoindTypes {
+export namespace LegacyNinjaCoindTypes {
     export interface ITransactionOutput {
         /**
          * the amount of the output
@@ -1021,9 +1021,9 @@ export namespace LegacyTurtleCoindTypes {
     }
 
     /**
-     * Defines the necessary methods that must be implemented by a Legacy TurtleCoind interface
+     * Defines the necessary methods that must be implemented by a Legacy NinjaCoind interface
      */
-    export abstract class ILegacyTurtleCoind {
+    export abstract class ILegacyNinjaCoind {
         public abstract block(hash: string): Promise<IBlockSummary>;
 
         public abstract blockCount(): Promise<number>;

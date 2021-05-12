@@ -17,20 +17,20 @@ import {
     LevinPacket,
     Transaction,
     KeyPair,
-    TurtleCoind,
+    NinjaCoind,
     WalletAPI,
-    LegacyTurtleCoind,
+    LegacyNinjaCoind,
     WalletAPITypes
 } from '../src';
 import * as assert from 'assert';
 import { before, describe, it } from 'mocha';
 import { BigInteger } from '../src/Types';
 
-const TurtleCoinCrypto = new Crypto();
+const NinjaCoinCrypto = new Crypto();
 const cnUtil = new CryptoNote();
 
 if (process.env.FORCE_JS) {
-    if (TurtleCoinCrypto.forceJSCrypto()) {
+    if (NinjaCoinCrypto.forceJSCrypto()) {
         console.warn('Performing tests with JS Cryptographic library');
     } else {
         console.warn('Could not activate JS Cryptographic library');
@@ -44,7 +44,7 @@ describe('Cryptography', async function () {
     this.timeout(30000);
 
     it('Generate Random Keys', async () => {
-        const keys = await TurtleCoinCrypto.generateKeys();
+        const keys = await NinjaCoinCrypto.generateKeys();
 
         assert(keys);
     });
@@ -52,18 +52,18 @@ describe('Cryptography', async function () {
     it('Check Key - Public Key', async () => {
         const key = '7849297236cd7c0d6c69a3c8c179c038d3c1c434735741bb3c8995c3c9d6f2ac';
 
-        assert(await TurtleCoinCrypto.checkKey(key));
+        assert(await NinjaCoinCrypto.checkKey(key));
     });
 
     it('Check Key - Private Key', async () => {
         const key = '4a078e76cd41a3d3b534b83dc6f2ea2de500b653ca82273b7bfad8045d85a400';
 
-        assert(!await TurtleCoinCrypto.checkKey(key));
+        assert(!await NinjaCoinCrypto.checkKey(key));
     });
 
     it('Tree Hash', async () => {
         const expectedTreeHash = 'dff9b4e047803822e97fb25bb9acb8320648954e15a6ddf6fa757873793c535e';
-        const treeHash = await TurtleCoinCrypto.tree_hash([
+        const treeHash = await NinjaCoinCrypto.tree_hash([
             'b542df5b6e7f5f05275c98e7345884e2ac726aeeb07e03e44e0389eb86cd05f0',
             '1b606a3f4a07d6489a1bcd07697bd16696b61c8ae982f61a90160f4e52828a7f',
             'c9fae8425d8688dc236bcdbc42fdb42d376c6ec190501aa84b04a4b4cf1ee122',
@@ -78,7 +78,7 @@ describe('Cryptography', async function () {
             '1b606a3f4a07d6489a1bcd07697bd16696b61c8ae982f61a90160f4e52828a7f'
         ];
 
-        const treeBranch = await TurtleCoinCrypto.tree_branch([
+        const treeBranch = await NinjaCoinCrypto.tree_branch([
             'b542df5b6e7f5f05275c98e7345884e2ac726aeeb07e03e44e0389eb86cd05f0',
             '1b606a3f4a07d6489a1bcd07697bd16696b61c8ae982f61a90160f4e52828a7f',
             'c9fae8425d8688dc236bcdbc42fdb42d376c6ec190501aa84b04a4b4cf1ee122',
@@ -100,102 +100,102 @@ describe('Cryptography', async function () {
     const algos: IHashingAlgo[] = [
         {
             name: 'CryptoNight Fast Hash',
-            func: TurtleCoinCrypto.cn_fast_hash,
+            func: NinjaCoinCrypto.cn_fast_hash,
             hash: 'b542df5b6e7f5f05275c98e7345884e2ac726aeeb07e03e44e0389eb86cd05f0'
         },
         {
             name: 'CryptoNight v0',
-            func: TurtleCoinCrypto.cn_slow_hash_v0,
+            func: NinjaCoinCrypto.cn_slow_hash_v0,
             hash: '1b606a3f4a07d6489a1bcd07697bd16696b61c8ae982f61a90160f4e52828a7f'
         },
         {
             name: 'CryptoNight v1',
-            func: TurtleCoinCrypto.cn_slow_hash_v1,
+            func: NinjaCoinCrypto.cn_slow_hash_v1,
             hash: 'c9fae8425d8688dc236bcdbc42fdb42d376c6ec190501aa84b04a4b4cf1ee122'
         },
         {
             name: 'CryptoNight v2',
-            func: TurtleCoinCrypto.cn_slow_hash_v2,
+            func: NinjaCoinCrypto.cn_slow_hash_v2,
             hash: '871fcd6823f6a879bb3f33951c8e8e891d4043880b02dfa1bb3be498b50e7578'
         },
         {
             name: 'CryptoNight Lite v0',
-            func: TurtleCoinCrypto.cn_lite_slow_hash_v0,
+            func: NinjaCoinCrypto.cn_lite_slow_hash_v0,
             hash: '28a22bad3f93d1408fca472eb5ad1cbe75f21d053c8ce5b3af105a57713e21dd'
         },
         {
             name: 'CryptoNight Lite v1',
-            func: TurtleCoinCrypto.cn_lite_slow_hash_v1,
+            func: NinjaCoinCrypto.cn_lite_slow_hash_v1,
             hash: '87c4e570653eb4c2b42b7a0d546559452dfab573b82ec52f152b7ff98e79446f'
         },
         {
             name: 'CryptoNight Lite v2',
-            func: TurtleCoinCrypto.cn_lite_slow_hash_v2,
+            func: NinjaCoinCrypto.cn_lite_slow_hash_v2,
             hash: 'b7e78fab22eb19cb8c9c3afe034fb53390321511bab6ab4915cd538a630c3c62'
         },
         {
             name: 'CryptoNight Dark v0',
-            func: TurtleCoinCrypto.cn_dark_slow_hash_v0,
+            func: NinjaCoinCrypto.cn_dark_slow_hash_v0,
             hash: 'bea42eadd78614f875e55bb972aa5ec54a5edf2dd7068220fda26bf4b1080fb8'
         },
         {
             name: 'CryptoNight Dark v1',
-            func: TurtleCoinCrypto.cn_dark_slow_hash_v1,
+            func: NinjaCoinCrypto.cn_dark_slow_hash_v1,
             hash: 'd18cb32bd5b465e5a7ba4763d60f88b5792f24e513306f1052954294b737e871'
         },
         {
             name: 'CryptoNight Dark v2',
-            func: TurtleCoinCrypto.cn_dark_slow_hash_v2,
+            func: NinjaCoinCrypto.cn_dark_slow_hash_v2,
             hash: 'a18a14d94efea108757a42633a1b4d4dc11838084c3c4347850d39ab5211a91f'
         },
         {
             name: 'CryptoNight Dark Lite v0',
-            func: TurtleCoinCrypto.cn_dark_lite_slow_hash_v0,
+            func: NinjaCoinCrypto.cn_dark_lite_slow_hash_v0,
             hash: 'faa7884d9c08126eb164814aeba6547b5d6064277a09fb6b414f5dbc9d01eb2b'
         },
         {
             name: 'CryptoNight Dark Lite v1',
-            func: TurtleCoinCrypto.cn_dark_lite_slow_hash_v1,
+            func: NinjaCoinCrypto.cn_dark_lite_slow_hash_v1,
             hash: 'c75c010780fffd9d5e99838eb093b37c0dd015101c9d298217866daa2993d277'
         },
         {
             name: 'CryptoNight Dark Lite v2',
-            func: TurtleCoinCrypto.cn_dark_lite_slow_hash_v2,
+            func: NinjaCoinCrypto.cn_dark_lite_slow_hash_v2,
             hash: 'fdceb794c1055977a955f31c576a8be528a0356ee1b0a1f9b7f09e20185cda28'
         },
         {
             name: 'CryptoNight Turtle v0',
-            func: TurtleCoinCrypto.cn_turtle_slow_hash_v0,
+            func: NinjaCoinCrypto.cn_turtle_slow_hash_v0,
             hash: '546c3f1badd7c1232c7a3b88cdb013f7f611b7bd3d1d2463540fccbd12997982'
         },
         {
             name: 'CryptoNight Turtle v1',
-            func: TurtleCoinCrypto.cn_turtle_slow_hash_v1,
+            func: NinjaCoinCrypto.cn_turtle_slow_hash_v1,
             hash: '29e7831780a0ab930e0fe3b965f30e8a44d9b3f9ad2241d67cfbfea3ed62a64e'
         },
         {
             name: 'CryptoNight Turtle v2',
-            func: TurtleCoinCrypto.cn_turtle_slow_hash_v2,
+            func: NinjaCoinCrypto.cn_turtle_slow_hash_v2,
             hash: 'fc67dfccb5fc90d7855ae903361eabd76f1e40a22a72ad3ef2d6ad27b5a60ce5'
         },
         {
             name: 'CryptoNight Turtle Lite v0',
-            func: TurtleCoinCrypto.cn_turtle_lite_slow_hash_v0,
+            func: NinjaCoinCrypto.cn_turtle_lite_slow_hash_v0,
             hash: '5e1891a15d5d85c09baf4a3bbe33675cfa3f77229c8ad66c01779e590528d6d3'
         },
         {
             name: 'CryptoNight Turtle Lite v1',
-            func: TurtleCoinCrypto.cn_turtle_lite_slow_hash_v1,
+            func: NinjaCoinCrypto.cn_turtle_lite_slow_hash_v1,
             hash: 'ae7f864a7a2f2b07dcef253581e60a014972b9655a152341cb989164761c180a'
         },
         {
             name: 'CryptoNight Turtle Lite v2',
-            func: TurtleCoinCrypto.cn_turtle_lite_slow_hash_v2,
+            func: NinjaCoinCrypto.cn_turtle_lite_slow_hash_v2,
             hash: 'b2172ec9466e1aee70ec8572a14c233ee354582bcb93f869d429744de5726a26'
         },
         {
             name: 'Chukwa',
-            func: TurtleCoinCrypto.chukwa_slow_hash,
+            func: NinjaCoinCrypto.chukwa_slow_hash,
             hash: 'c0dad0eeb9c52e92a1c3aa5b76a3cb90bd7376c28dce191ceeb1096e3a390d2e'
         }
     ];
@@ -219,8 +219,8 @@ describe('Wallets', async function () {
         'exotic', 'cube', 'hexagon', 'ionic', 'joyous',
         'cage', 'abnormal', 'hull', 'jigsaw', 'lied'
     ].join(' ');
-    const testAddress = 'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB' +
-        '6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX';
+    const testAddress = 'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfA' +
+        'rphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15';
 
     describe('Mnemonics', async () => {
         it('address from mnemonic phrase has matching seed', async () => {
@@ -428,45 +428,45 @@ describe('SubWallets', async function () {
     });
 
     it('Subwallet #2 not found from Subwallet #1', async () => {
-        const key = await TurtleCoinCrypto.cn_fast_hash(subWallets[1].spend.privateKey);
+        const key = await NinjaCoinCrypto.cn_fast_hash(subWallets[1].spend.privateKey);
         assert(key !== subWallets[2].spend.privateKey);
-        assert(await TurtleCoinCrypto.scReduce32(key) !== subWallets[2].spend.privateKey);
+        assert(await NinjaCoinCrypto.scReduce32(key) !== subWallets[2].spend.privateKey);
     });
 
     it('Subwallet #64 not found from Subwallet #1', async () => {
         let key = subWallets[1].spend.privateKey;
         for (let i = 0; i < 63; i++) {
-            key = await TurtleCoinCrypto.cn_fast_hash(key);
+            key = await NinjaCoinCrypto.cn_fast_hash(key);
         }
         assert(key !== subWallets[3].spend.privateKey);
-        assert(await TurtleCoinCrypto.scReduce32(key) !== subWallets[3].spend.privateKey);
+        assert(await NinjaCoinCrypto.scReduce32(key) !== subWallets[3].spend.privateKey);
     });
 
     it('Subwallet #65 not found from Subwallet #1', async () => {
         let key = subWallets[1].spend.privateKey;
         for (let i = 0; i < 64; i++) {
-            key = await TurtleCoinCrypto.cn_fast_hash(key);
+            key = await NinjaCoinCrypto.cn_fast_hash(key);
         }
         assert(key !== subWallets[4].spend.privateKey);
-        assert(await TurtleCoinCrypto.scReduce32(key) !== subWallets[4].spend.privateKey);
+        assert(await NinjaCoinCrypto.scReduce32(key) !== subWallets[4].spend.privateKey);
     });
 
     it('Subwallet #64 not found from Subwallet #2', async () => {
         let key = subWallets[2].spend.privateKey;
         for (let i = 0; i < 62; i++) {
-            key = await TurtleCoinCrypto.cn_fast_hash(key);
+            key = await NinjaCoinCrypto.cn_fast_hash(key);
         }
         assert(key !== subWallets[3].spend.privateKey);
-        assert(await TurtleCoinCrypto.scReduce32(key) !== subWallets[3].spend.privateKey);
+        assert(await NinjaCoinCrypto.scReduce32(key) !== subWallets[3].spend.privateKey);
     });
 
     it('Subwallet #65 not found from Subwallet #2', async () => {
         let key = subWallets[2].spend.privateKey;
         for (let i = 0; i < 63; i++) {
-            key = await TurtleCoinCrypto.cn_fast_hash(key);
+            key = await NinjaCoinCrypto.cn_fast_hash(key);
         }
         assert(key !== subWallets[4].spend.privateKey);
-        assert(await TurtleCoinCrypto.scReduce32(key) !== subWallets[4].spend.privateKey);
+        assert(await NinjaCoinCrypto.scReduce32(key) !== subWallets[4].spend.privateKey);
     });
 });
 
@@ -477,7 +477,7 @@ describe('Transactions', async function () {
         it('Amount: 1234567', async () => {
             const amount = 1234567;
             const transfers = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 amount);
             assert(transfers.length === 7);
         });
@@ -485,7 +485,7 @@ describe('Transactions', async function () {
         it('Amount: 101010', async () => {
             const amount = 101010;
             const transfers = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 amount);
             assert(transfers.length === 3);
         });
@@ -493,7 +493,7 @@ describe('Transactions', async function () {
         it('Amount: 500000000000', async () => {
             const amount = 500000000000;
             const transfers = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 amount);
             assert(transfers.length === 5);
         });
@@ -501,7 +501,7 @@ describe('Transactions', async function () {
         it('Amount: 555555555555', async () => {
             const amount = 955555555555;
             const transfers = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 amount);
             assert(transfers.length === 20);
         });
@@ -516,17 +516,17 @@ describe('Transactions', async function () {
         let derivation: string;
 
         before('Generate Derivation', async () => {
-            derivation = await TurtleCoinCrypto.generateKeyDerivation(txPublicKey, walletPrivateViewKey);
+            derivation = await NinjaCoinCrypto.generateKeyDerivation(txPublicKey, walletPrivateViewKey);
         });
 
         it('underive public spend key (no match)', async () => {
-            const publicSpendKey1 = await TurtleCoinCrypto.underivePublicKey(
+            const publicSpendKey1 = await NinjaCoinCrypto.underivePublicKey(
                 derivation, 0, 'aae1b90b4d0a7debb417d91b7f7aa8fdfd80c42ebc6757e1449fd1618a5a3ff1');
             assert(publicSpendKey1 !== walletPublicSpendKey);
         });
 
         it('underive public spend key (match)', async () => {
-            const publicSpendKey2 = await TurtleCoinCrypto.underivePublicKey(
+            const publicSpendKey2 = await NinjaCoinCrypto.underivePublicKey(
                 derivation, ourOutputIndex, 'bb55bef919d1c9f74b5b52a8a6995a1dc4af4c0bb8824f5dc889012bc748173d');
             assert(publicSpendKey2 === walletPublicSpendKey);
         });
@@ -571,7 +571,7 @@ describe('Transactions', async function () {
         let derivation: string;
 
         before('Generate derivation', async () => {
-            derivation = await TurtleCoinCrypto.generateKeyDerivation(txPublicKey, walletPrivateViewKey);
+            derivation = await NinjaCoinCrypto.generateKeyDerivation(txPublicKey, walletPrivateViewKey);
         });
 
         it('generate keyImage', async () => {
@@ -609,7 +609,7 @@ describe('Transactions', async function () {
     describe('Creation', async () => {
         it('generate a transaction', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -646,7 +646,7 @@ describe('Transactions', async function () {
 
         it('generate a fusion transaction', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 13080);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -693,7 +693,7 @@ describe('Transactions', async function () {
 
         it('generate a transaction with arbitrary data payload', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -765,7 +765,7 @@ describe('Transactions', async function () {
         it('generate a transaction using payment Id', async function () {
             const paymentId = '1886db9573ae180e27f39cced773bdf83aa3a55f1168d89e82bf337bb5373506';
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -892,7 +892,7 @@ describe('Transactions', async function () {
 
         it('fail to generate a fusion transaction when not enough inputs are used', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 13080);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -945,7 +945,7 @@ describe('Transactions', async function () {
 
         it('fail to generate a fusion transaction when not enough outputs are created', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 12000);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -998,7 +998,7 @@ describe('Transactions', async function () {
 
         it('fail to generate a transaction when network fee is incorrect', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -1044,8 +1044,8 @@ describe('Transactions', async function () {
 
             for (let i = 0; i < 100; i++) {
                 const outputs = await cnUtil.generateTransactionOutputs(
-                    'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB' +
-                    '6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                    'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfA' +
+                    'rphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                     90);
 
                 for (const output of outputs) {
@@ -1094,7 +1094,7 @@ describe('Transactions', async function () {
 
         it('fail to generate a transaction with too much extra data', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -1175,7 +1175,7 @@ describe('Transactions', async function () {
 
         it('fail to generate a transaction when output too large', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -1310,7 +1310,7 @@ describe('Transactions', async function () {
     describe('Prepared Transactions', async () => {
         it('prepare a transaction', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -1347,13 +1347,13 @@ describe('Transactions', async function () {
 
         it('prepare a transaction - precomputed K', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
             const walletPrivateSpendKey = 'd9d555a892a85f64916cae1a168bd3f7f400b6471c7b12b438b599601298210b';
             const walletPublicSpendKey = '854a637b2863af9e8e8216eb2382f3d16616b3ac3e53d0976fbd6f8da6c56418';
-            const keys = await TurtleCoinCrypto.generateKeys();
+            const keys = await NinjaCoinCrypto.generateKeys();
 
             const fakeInput = {
                 index: 2,
@@ -1396,7 +1396,7 @@ describe('Transactions', async function () {
 
         it('complete a transaction', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
@@ -1436,13 +1436,13 @@ describe('Transactions', async function () {
 
         it('complete a transaction - precomputed K', async function () {
             const madeOutputs = await cnUtil.generateTransactionOutputs(
-                'TRTLv3nzumGSpRsZWxkcbDhiVEfy9rAgX3X9b7z8XQAy9gwjB6cwr6BJ3P52a6TQUSfA4eXf3Avwz7W89J4doLuigLjUzQjvRqX',
+                'Ninja12hMYuJMc8ynM1wZrh2bVnCXxLBuW7ut97CRSVNJuCrGjNWofPfArphtcZEySec97u4dj5awGxxchBCsJZYcCkPec6Bwcq15',
                 90);
             const txPublicKey = '3b0cc2b066812e6b9fcc42a797dc3c723a7344b604fd4be0b22e06254ff57f94';
             const walletPrivateViewKey = '6968a0b8f744ec4b8cea5ec124a1b4bd1626a2e6f31e999f8adbab52c4dfa909';
             const walletPrivateSpendKey = 'd9d555a892a85f64916cae1a168bd3f7f400b6471c7b12b438b599601298210b';
             const walletPublicSpendKey = '854a637b2863af9e8e8216eb2382f3d16616b3ac3e53d0976fbd6f8da6c56418';
-            const keys = await TurtleCoinCrypto.generateKeys();
+            const keys = await NinjaCoinCrypto.generateKeys();
 
             const fakeInput = {
                 index: 2,
@@ -1818,7 +1818,7 @@ describe('Peer-to-Peer', async function () {
 });
 
 describe('Test Ledger Integration', async function () {
-    let skipLedgerTests = TurtleCoinCrypto.type !== CryptoType.NODEADDON;
+    let skipLedgerTests = NinjaCoinCrypto.type !== CryptoType.NODEADDON;
     let TransportNodeHID: any;
 
     let ledger: LedgerNote;
@@ -1908,18 +1908,18 @@ describe('Test Ledger Integration', async function () {
             return this.skip();
         }
 
-        const keys = await TurtleCoinCrypto.generateKeys();
+        const keys = await NinjaCoinCrypto.generateKeys();
 
-        const derivation = await TurtleCoinCrypto.generateKeyDerivation(
+        const derivation = await NinjaCoinCrypto.generateKeyDerivation(
             ledger.address.view.publicKey, keys.private_key);
 
-        const public_ephemeral = await TurtleCoinCrypto.derivePublicKey(
+        const public_ephemeral = await NinjaCoinCrypto.derivePublicKey(
             derivation, 0, ledger.address.spend.publicKey);
 
-        const private_ephemeral = await TurtleCoinCrypto.deriveSecretKey(
+        const private_ephemeral = await NinjaCoinCrypto.deriveSecretKey(
             derivation, 0, spend_key.privateKey);
 
-        const key_image = await TurtleCoinCrypto.generateKeyImage(public_ephemeral, private_ephemeral);
+        const key_image = await NinjaCoinCrypto.generateKeyImage(public_ephemeral, private_ephemeral);
 
         const ledger_key_image = await ledger.generateKeyImage(
             keys.public_key, undefined, undefined, undefined, 0);
@@ -1934,18 +1934,18 @@ describe('Test Ledger Integration', async function () {
             return this.skip();
         }
 
-        const keys = await TurtleCoinCrypto.generateKeys();
+        const keys = await NinjaCoinCrypto.generateKeys();
 
-        const derivation = await TurtleCoinCrypto.generateKeyDerivation(
+        const derivation = await NinjaCoinCrypto.generateKeyDerivation(
             ledger.address.view.publicKey, keys.private_key);
 
-        const public_ephemeral = await TurtleCoinCrypto.derivePublicKey(
+        const public_ephemeral = await NinjaCoinCrypto.derivePublicKey(
             derivation, 0, ledger.address.spend.publicKey);
 
-        const private_ephemeral = await TurtleCoinCrypto.deriveSecretKey(
+        const private_ephemeral = await NinjaCoinCrypto.deriveSecretKey(
             derivation, 0, spend_key.privateKey);
 
-        const key_image = await TurtleCoinCrypto.generateKeyImage(public_ephemeral, private_ephemeral);
+        const key_image = await NinjaCoinCrypto.generateKeyImage(public_ephemeral, private_ephemeral);
 
         const ledger_key_image = await ledger.generateKeyImagePrimitive(
             keys.public_key, undefined, 0, derivation);
@@ -1974,12 +1974,12 @@ describe('Test Ledger Integration', async function () {
 
         const outputs = await ledger.generateTransactionOutputs(await ledger.address.address(), 1000000);
 
-        const keys = await TurtleCoinCrypto.generateKeys();
+        const keys = await NinjaCoinCrypto.generateKeys();
 
-        const derivation = await TurtleCoinCrypto.generateKeyDerivation(
+        const derivation = await NinjaCoinCrypto.generateKeyDerivation(
             ledger.address.view.publicKey, keys.private_key);
 
-        const public_ephemeral = await TurtleCoinCrypto.derivePublicKey(
+        const public_ephemeral = await NinjaCoinCrypto.derivePublicKey(
             derivation, 0, ledger.address.spend.publicKey);
 
         const fakeInput = { index: 0, key: public_ephemeral, amount: 2000000, globalIndex: 0 };
@@ -1990,7 +1990,7 @@ describe('Test Ledger Integration', async function () {
         const random_outputs = [];
 
         for (let i = 0; i < 3; i++) {
-            const random = await TurtleCoinCrypto.generateKeys();
+            const random = await NinjaCoinCrypto.generateKeys();
 
             random_outputs.push({
                 globalIndex: parseInt(random.private_key.slice(0, 4), 16),
@@ -2002,12 +2002,12 @@ describe('Test Ledger Integration', async function () {
     });
 });
 
-describe('TurtleCoind < 1.0.0', function () {
+describe('NinjaCoind < 1.0.0', function () {
     this.timeout(60000);
 
     let is_explorer = false;
 
-    const server = new LegacyTurtleCoind('seed.turtlenode.io');
+    const server = new LegacyNinjaCoind('seed.turtlenode.io');
 
     before('check()', async function () {
         try {
@@ -2252,12 +2252,12 @@ describe('TurtleCoind < 1.0.0', function () {
     });
 });
 
-describe('TurtleCoind >= 1.0.0', function () {
+describe('NinjaCoind >= 1.0.0', function () {
     this.timeout(60000);
 
     let is_explorer = false;
 
-    const server = new TurtleCoind('localhost');
+    const server = new NinjaCoind('localhost');
 
     before('check()', async function () {
         try {

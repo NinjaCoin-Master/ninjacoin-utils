@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { Block } from './Block';
 import { Transaction } from './Transaction';
-import { TurtleCoindTypes } from './Types';
+import { NinjaCoindTypes } from './Types';
 /** @ignore */
 export declare enum SIZES {
     KEY = 32,
@@ -64,7 +64,7 @@ export declare class BlockTemplate {
      * Creates a new block template instance using the supplied daemon response
      * @param response the daemon response to the get_blocktemplate call
      */
-    static from(response: TurtleCoindTypes.IBlockTemplate): Promise<BlockTemplate>;
+    static from(response: NinjaCoindTypes.IBlockTemplate): Promise<BlockTemplate>;
     protected m_blockTemplate: Buffer;
     protected m_difficulty: number;
     protected m_height: number;

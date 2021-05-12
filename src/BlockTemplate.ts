@@ -4,7 +4,7 @@
 
 import { Block } from './Block';
 import { Transaction } from './Transaction';
-import { BigInteger, TurtleCoindTypes } from './Types';
+import { BigInteger, NinjaCoindTypes } from './Types';
 
 /** @ignore */
 export enum SIZES {
@@ -125,7 +125,7 @@ export class BlockTemplate {
      * Creates a new block template instance using the supplied daemon response
      * @param response the daemon response to the get_blocktemplate call
      */
-    public static async from (response: TurtleCoindTypes.IBlockTemplate): Promise<BlockTemplate> {
+    public static async from (response: NinjaCoindTypes.IBlockTemplate): Promise<BlockTemplate> {
         const result = new BlockTemplate();
 
         result.m_blockTemplate = Buffer.from(response.blob, 'hex');

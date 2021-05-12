@@ -19,7 +19,7 @@ This package contains a number of different utility libraries that help with the
 * Block handling, construction, decoding, and ID and PoW hash calculation
 * Block template handling
 * Multisig operations including Multisig participant message exchanges
-* RPC interations with TurtleCoind and Wallet-API
+* RPC interations with NinjaCoind and Wallet-API
 * Network P2P communication protocols (connect to the P2P network directly)
 * Transaction construction facilities
 * Ledger hardware wallet interaction for the [TurtleCoin® Ledger Wallet Application](https://github.com/turtlecoin/ledger-turtlecoin-app)

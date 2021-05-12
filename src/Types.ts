@@ -6,9 +6,9 @@ import { Crypto } from 'turtlecoin-crypto';
 import * as BigInteger from 'big-integer';
 
 /** @ignore */
-const TurtleCoinCrypto = new Crypto();
+const NinjaCoinCrypto = new Crypto();
 
-export { TurtleCoinCrypto };
+export { NinjaCoinCrypto };
 
 /** @ignore */
 export enum PortableStorageConstants {
@@ -41,9 +41,9 @@ export * from './Types/Ledger';
 
 export * from './Types/WalletAPI';
 
-export * from './Types/LegacyTurtleCoind';
+export * from './Types/LegacyNinjaCoind';
 
-export * from './Types/TurtleCoind';
+export * from './Types/NinjaCoind';
 
 export { PortableStorage, StorageType } from './Types/PortableStorage';
 

@@ -129,7 +129,7 @@ class Address {
             const publicSpend = reader.hash();
             const publicView = reader.hash();
             const expectedChecksum = reader.bytes(SIZES.CHECKSUM).toString('hex');
-            const checksum = (new bytestream_1.Reader(yield Types_1.TurtleCoinCrypto.cn_fast_hash(decodedPrefix + paymentId + publicSpend + publicView))).bytes(SIZES.CHECKSUM).toString('hex');
+            const checksum = (new bytestream_1.Reader(yield Types_1.NinjaCoinCrypto.cn_fast_hash(decodedPrefix + paymentId + publicSpend + publicView))).bytes(SIZES.CHECKSUM).toString('hex');
             if (expectedChecksum !== checksum) {
                 throw new Error('Could not parse address: checksum mismatch');
             }
@@ -237,7 +237,7 @@ class Address {
                 prefix = new AddressPrefix_1.AddressPrefix(prefix);
             }
             if (!Common_1.Common.isHex64(seed)) {
-                seed = yield Types_1.TurtleCoinCrypto.cn_fast_hash(seed);
+                seed = yield Types_1.NinjaCoinCrypto.cn_fast_hash(seed);
             }
             const address = new Address();
             address.m_seed = seed;
@@ -287,7 +287,7 @@ class Address {
             if (typeof prefix === 'number') {
                 prefix = new AddressPrefix_1.AddressPrefix(prefix);
             }
-            if (!(yield Types_1.TurtleCoinCrypto.checkScalar(privateSpendKey))) {
+            if (!(yield Types_1.NinjaCoinCrypto.checkScalar(privateSpendKey))) {
                 throw new Error('Invalid private spend key supplied');
             }
             subwalletIndex = Math.abs(subwalletIndex);
@@ -300,7 +300,7 @@ class Address {
                 address.prefix = prefix;
             }
             const view = yield Types_1.ED25519.KeyPair.from(undefined, privateSpendKey, undefined, 1);
-            const spend = yield Types_1.TurtleCoinCrypto.generateDeterministicSubwalletKeys(privateSpendKey, subwalletIndex);
+            const spend = yield Types_1.NinjaCoinCrypto.generateDeterministicSubwalletKeys(privateSpendKey, subwalletIndex);
             address.m_keys = yield Types_1.ED25519.Keys.from(yield Types_1.ED25519.KeyPair.from(spend.public_key, spend.private_key), view);
             return address;
         });
@@ -329,7 +329,7 @@ class Address {
             if (this.m_cached.addressPrefix === writer.blob && this.m_cached.address.length !== 0) {
                 return base58_1.Base58.encode(this.m_cached.address);
             }
-            const checksum = (yield Types_1.TurtleCoinCrypto.cn_fast_hash(writer.blob))
+            const checksum = (yield Types_1.NinjaCoinCrypto.cn_fast_hash(writer.blob))
                 .slice(0, 8);
             this.m_cached.addressPrefix = writer.blob;
             writer.hex(checksum);

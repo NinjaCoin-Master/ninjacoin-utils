@@ -1,8 +1,8 @@
 import { Crypto } from 'turtlecoin-crypto';
 import * as BigInteger from 'big-integer';
 /** @ignore */
-declare const TurtleCoinCrypto: Crypto;
-export { TurtleCoinCrypto };
+declare const NinjaCoinCrypto: Crypto;
+export { NinjaCoinCrypto };
 /** @ignore */
 export declare enum PortableStorageConstants {
     SIGNATURE_A = 16847105,
@@ -21,7 +21,7 @@ export * from './Types/MultisigInterfaces';
 export * from './Types/ICryptoNote';
 export * from './Types/Ledger';
 export * from './Types/WalletAPI';
-export * from './Types/LegacyTurtleCoind';
-export * from './Types/TurtleCoind';
+export * from './Types/LegacyNinjaCoind';
+export * from './Types/NinjaCoind';
 export { PortableStorage, StorageType } from './Types/PortableStorage';
 export { BigInteger };

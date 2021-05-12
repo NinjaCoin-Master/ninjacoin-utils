@@ -7,14 +7,14 @@ exports.Config = void 0;
 /** @ignore */
 exports.Config = {
     activateParentBlockVersion: 2,
-    coinUnitPlaces: 2,
-    addressPrefix: 3914525,
+    coinUnitPlaces: 5,
+    addressPrefix: 10115542401,
     keccakIterations: 1,
     defaultNetworkFee: 10,
     fusionMinInputCount: 12,
     fusionMinInOutCountRatio: 4,
     mmMiningBlockVersion: 2,
-    maximumOutputAmount: 100000000000,
+    maximumOutputAmount: 10000000000000,
     maximumOutputsPerTransaction: 90,
     maximumExtraSize: 1024,
     activateFeePerByteTransactions: true,

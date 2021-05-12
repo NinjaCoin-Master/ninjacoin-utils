@@ -53,7 +53,7 @@ class LedgerNote extends events_1.EventEmitter {
             this.m_config = Common_1.Common.mergeConfig(config);
         }
         if (cryptoConfig) {
-            Types_1.TurtleCoinCrypto.userCryptoFunctions = cryptoConfig;
+            Types_1.NinjaCoinCrypto.userCryptoFunctions = cryptoConfig;
         }
     }
     /** @ignore */
@@ -73,10 +73,10 @@ class LedgerNote extends events_1.EventEmitter {
      * The current cryptographic primitives configuration
      */
     get cryptoConfig() {
-        return Types_1.TurtleCoinCrypto.userCryptoFunctions;
+        return Types_1.NinjaCoinCrypto.userCryptoFunctions;
     }
     set cryptoConfig(config) {
-        Types_1.TurtleCoinCrypto.userCryptoFunctions = config;
+        Types_1.NinjaCoinCrypto.userCryptoFunctions = config;
     }
     /**
      * Provides the public wallet address of the ledger device
@@ -150,7 +150,7 @@ class LedgerNote extends events_1.EventEmitter {
                 yield this.fetchKeys();
             }
             UNUSED(privateViewKey);
-            return Types_1.TurtleCoinCrypto.generateKeyDerivation(transactionPublicKey, this.address.view.privateKey);
+            return Types_1.NinjaCoinCrypto.generateKeyDerivation(transactionPublicKey, this.address.view.privateKey);
         });
     }
     /**
@@ -171,7 +171,7 @@ class LedgerNote extends events_1.EventEmitter {
             UNUSED(privateViewKey);
             UNUSED(publicSpendKey);
             UNUSED(privateSpendKey);
-            const derivation = yield Types_1.TurtleCoinCrypto.generateKeyDerivation(transactionPublicKey, this.address.view.privateKey);
+            const derivation = yield Types_1.NinjaCoinCrypto.generateKeyDerivation(transactionPublicKey, this.address.view.privateKey);
             return this.generateKeyImagePrimitive(undefined, undefined, outputIndex, derivation);
         });
     }
@@ -191,7 +191,7 @@ class LedgerNote extends events_1.EventEmitter {
             }
             UNUSED(publicSpendKey);
             UNUSED(privateSpendKey);
-            const publicEphemeral = yield Types_1.TurtleCoinCrypto.derivePublicKey(derivation, outputIndex, this.address.spend.publicKey);
+            const publicEphemeral = yield Types_1.NinjaCoinCrypto.derivePublicKey(derivation, outputIndex, this.address.spend.publicKey);
             const result = yield this.m_ledger.generateKeyImagePrimitive(derivation, outputIndex, publicEphemeral, !this.m_config.ledgerDebug);
             return {
                 publicEphemeral: publicEphemeral,
@@ -207,7 +207,7 @@ class LedgerNote extends events_1.EventEmitter {
      */
     privateKeyToPublicKey(privateKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            return Types_1.TurtleCoinCrypto.secretKeyToPublicKey(privateKey);
+            return Types_1.NinjaCoinCrypto.secretKeyToPublicKey(privateKey);
         });
     }
     /**
@@ -261,8 +261,8 @@ class LedgerNote extends events_1.EventEmitter {
             UNUSED(privateViewKey);
             UNUSED(publicSpendKey);
             UNUSED(privateSpendKey);
-            const derivedKey = yield Types_1.TurtleCoinCrypto.generateKeyDerivation(transactionPublicKey, this.address.view.privateKey);
-            const publicEphemeral = yield Types_1.TurtleCoinCrypto.derivePublicKey(derivedKey, output.index, this.address.spend.publicKey);
+            const derivedKey = yield Types_1.NinjaCoinCrypto.generateKeyDerivation(transactionPublicKey, this.address.view.privateKey);
+            const publicEphemeral = yield Types_1.NinjaCoinCrypto.derivePublicKey(derivedKey, output.index, this.address.spend.publicKey);
             if (publicEphemeral === output.key) {
                 output.input = {
                     publicEphemeral,
@@ -382,7 +382,7 @@ class LedgerNote extends events_1.EventEmitter {
                 message = JSON.stringify(message);
             }
             const hex = Buffer.from(message);
-            const hash = yield Types_1.TurtleCoinCrypto.cn_fast_hash(hex.toString('hex'));
+            const hash = yield Types_1.NinjaCoinCrypto.cn_fast_hash(hex.toString('hex'));
             return this.m_ledger.generateSignature(hash, !this.m_config.ledgerDebug);
         });
     }
@@ -400,8 +400,8 @@ class LedgerNote extends events_1.EventEmitter {
                 message = JSON.stringify(message);
             }
             const hex = Buffer.from(message);
-            const hash = yield Types_1.TurtleCoinCrypto.cn_fast_hash(hex.toString('hex'));
-            return Types_1.TurtleCoinCrypto.checkSignature(hash, publicKey, signature);
+            const hash = yield Types_1.NinjaCoinCrypto.cn_fast_hash(hex.toString('hex'));
+            return Types_1.NinjaCoinCrypto.checkSignature(hash, publicKey, signature);
         });
     }
     /**
@@ -786,7 +786,7 @@ class LedgerNote extends events_1.EventEmitter {
                 if (!meta.input.tx_public_key) {
                     throw new Error('Transactions must be prepared by this class');
                 }
-                const public_ephemeral = yield Types_1.TurtleCoinCrypto.derivePublicKey(meta.input.derivation, meta.input.outputIndex, this.m_address.spend.publicKey);
+                const public_ephemeral = yield Types_1.NinjaCoinCrypto.derivePublicKey(meta.input.derivation, meta.input.outputIndex, this.m_address.spend.publicKey);
                 promises.push(completeRingSignatures(this.m_ledger, meta.input.tx_public_key, meta.input.outputIndex, public_ephemeral, meta.key, tx.signatures[meta.index], meta.realOutputIndex, meta.index, !this.m_config.ledgerDebug));
             }
             const results = yield Promise.all(promises);
@@ -896,8 +896,8 @@ function prepareTransactionOutputs(transactionKeys, outputs) {
     return __awaiter(this, void 0, void 0, function* () {
         function prepareOutput(destination, amount, index, privateKey) {
             return __awaiter(this, void 0, void 0, function* () {
-                const outDerivation = yield Types_1.TurtleCoinCrypto.generateKeyDerivation(destination.view.publicKey, privateKey);
-                const outPublicEphemeral = yield Types_1.TurtleCoinCrypto.derivePublicKey(outDerivation, index, destination.spend.publicKey);
+                const outDerivation = yield Types_1.NinjaCoinCrypto.generateKeyDerivation(destination.view.publicKey, privateKey);
+                const outPublicEphemeral = yield Types_1.NinjaCoinCrypto.derivePublicKey(outDerivation, index, destination.spend.publicKey);
                 return {
                     amount,
                     key: outPublicEphemeral
@@ -923,7 +923,7 @@ function prepareTransactionOutputs(transactionKeys, outputs) {
 /** @ignore */
 function prepareRingSignatures(hash, keyImage, publicKeys, realOutputIndex, derivation, outputIndex, index, tx_public_key, randomKey) {
     return __awaiter(this, void 0, void 0, function* () {
-        const prepped = yield Types_1.TurtleCoinCrypto.prepareRingSignatures(hash, keyImage, publicKeys, realOutputIndex, randomKey);
+        const prepped = yield Types_1.NinjaCoinCrypto.prepareRingSignatures(hash, keyImage, publicKeys, realOutputIndex, randomKey);
         return {
             index: index,
             realOutputIndex: realOutputIndex,
@@ -941,7 +941,7 @@ function prepareRingSignatures(hash, keyImage, publicKeys, realOutputIndex, deri
 /** @ignore */
 function checkRingSignatures(hash, keyImage, publicKeys, signatures) {
     return __awaiter(this, void 0, void 0, function* () {
-        return Types_1.TurtleCoinCrypto.checkRingSignatures(hash, keyImage, publicKeys, signatures);
+        return Types_1.NinjaCoinCrypto.checkRingSignatures(hash, keyImage, publicKeys, signatures);
     });
 }
 /** @ignore */

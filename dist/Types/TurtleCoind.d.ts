@@ -1,5 +1,5 @@
 import * as BigInteger from 'big-integer';
-export declare namespace TurtleCoindTypes {
+export declare namespace NinjaCoindTypes {
     interface IVersion {
         /**
          * The major version number
@@ -587,9 +587,9 @@ export declare namespace TurtleCoindTypes {
         };
     }
     /**
-     * Defines the necessary methods that must be implemented by a TurtleCoind interface
+     * Defines the necessary methods that must be implemented by a NinjaCoind interface
      */
-    abstract class ITurtleCoind {
+    abstract class INinjaCoind {
         abstract fee(): Promise<IFee>;
         abstract height(): Promise<IHeight>;
         abstract info(): Promise<IInfo>;

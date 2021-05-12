@@ -3,14 +3,14 @@
 //
 // Please see the included LICENSE file for more information.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LegacyTurtleCoindTypes = void 0;
+exports.LegacyNinjaCoindTypes = void 0;
 /** @ignore */
-var LegacyTurtleCoindTypes;
-(function (LegacyTurtleCoindTypes) {
+var LegacyNinjaCoindTypes;
+(function (LegacyNinjaCoindTypes) {
     /**
-     * Defines the necessary methods that must be implemented by a Legacy TurtleCoind interface
+     * Defines the necessary methods that must be implemented by a Legacy NinjaCoind interface
      */
-    class ILegacyTurtleCoind {
+    class ILegacyNinjaCoind {
     }
-    LegacyTurtleCoindTypes.ILegacyTurtleCoind = ILegacyTurtleCoind;
-})(LegacyTurtleCoindTypes = exports.LegacyTurtleCoindTypes || (exports.LegacyTurtleCoindTypes = {}));
+    LegacyNinjaCoindTypes.ILegacyNinjaCoind = ILegacyNinjaCoind;
+})(LegacyNinjaCoindTypes = exports.LegacyNinjaCoindTypes || (exports.LegacyNinjaCoindTypes = {}));

@@ -87,7 +87,7 @@ class Block {
     baseTransactionBranch() {
         return __awaiter(this, void 0, void 0, function* () {
             const transactions = [yield this.m_minerTransaction.hash()].concat(this.transactions);
-            return Types_1.TurtleCoinCrypto.tree_branch(transactions);
+            return Types_1.NinjaCoinCrypto.tree_branch(transactions);
         });
     }
     /**
@@ -96,7 +96,7 @@ class Block {
     transactionTreeHash() {
         return __awaiter(this, void 0, void 0, function* () {
             const transactions = [yield this.m_minerTransaction.hash()].concat(this.transactions);
-            const treeHash = yield Types_1.TurtleCoinCrypto.tree_hash(transactions);
+            const treeHash = yield Types_1.NinjaCoinCrypto.tree_hash(transactions);
             return { hash: treeHash, count: transactions.length };
         });
     }
@@ -242,7 +242,7 @@ class Block {
             block.m_nonce = reader.uint32_t(true).toJSNumber();
             if (block.m_majorVersion >= block.m_config.activateParentBlockVersion) {
                 block.m_parentBlock.transactionCount = reader.varint().toJSNumber();
-                const baseTransactionBranchDepth = yield Types_1.TurtleCoinCrypto.tree_depth(block.m_parentBlock.transactionCount);
+                const baseTransactionBranchDepth = yield Types_1.NinjaCoinCrypto.tree_depth(block.m_parentBlock.transactionCount);
                 for (let i = 0; i < baseTransactionBranchDepth; i++) {
                     block.m_parentBlock.baseTransactionBranch.push(reader.hash());
                 }
@@ -399,7 +399,7 @@ class Block {
                 writer.varint(this.m_timestamp.getTime() / 1000);
                 writer.hash(this.m_parentBlock.previousBlockHash);
                 writer.uint32_t(this.m_nonce, true);
-                const treeHash = yield Types_1.TurtleCoinCrypto.tree_hash_from_branch(this.m_parentBlock.baseTransactionBranch, yield this.m_parentBlock.minerTransaction.hash(), 0);
+                const treeHash = yield Types_1.NinjaCoinCrypto.tree_hash_from_branch(this.m_parentBlock.baseTransactionBranch, yield this.m_parentBlock.minerTransaction.hash(), 0);
                 writer.hash(treeHash);
                 writer.varint(this.m_parentBlock.transactionCount);
                 if (headerOnly) {
@@ -438,7 +438,7 @@ function getBlockHash(data) {
         const writer = new bytestream_1.Writer();
         writer.varint(data.length);
         writer.write(data);
-        return Types_1.TurtleCoinCrypto.cn_fast_hash(writer.blob);
+        return Types_1.NinjaCoinCrypto.cn_fast_hash(writer.blob);
     });
 }
 /** @ignore */
@@ -449,15 +449,15 @@ function getBlockPoWHash(data, majorVersion) {
             case 1:
             case 2:
             case 3:
-                return Types_1.TurtleCoinCrypto.cn_slow_hash_v0(blob);
+                return Types_1.NinjaCoinCrypto.cn_slow_hash_v0(blob);
             case 4:
-                return Types_1.TurtleCoinCrypto.cn_lite_slow_hash_v1(blob);
+                return Types_1.NinjaCoinCrypto.cn_lite_slow_hash_v1(blob);
             case 5:
-                return Types_1.TurtleCoinCrypto.cn_turtle_lite_slow_hash_v2(blob);
+                return Types_1.NinjaCoinCrypto.cn_turtle_lite_slow_hash_v2(blob);
             case 6:
-                return Types_1.TurtleCoinCrypto.chukwa_slow_hash_v1(blob);
+                return Types_1.NinjaCoinCrypto.chukwa_slow_hash_v1(blob);
             case 7:
-                return Types_1.TurtleCoinCrypto.chukwa_slow_hash_v2(blob);
+                return Types_1.NinjaCoinCrypto.chukwa_slow_hash_v2(blob);
             default:
                 throw new Error('Unhandled major block version');
         }

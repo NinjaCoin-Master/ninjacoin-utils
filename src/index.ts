@@ -22,8 +22,8 @@ export { MultisigMessage } from './MultisigMessage';
 export { ParentBlock } from './ParentBlock';
 export { Transaction } from './Transaction';
 export { ICoinConfig } from './Config';
-export { LegacyTurtleCoind } from './LegacyTurtleCoind';
-export { TurtleCoind } from './TurtleCoind';
+export { LegacyNinjaCoind } from './LegacyNinjaCoind';
+export { NinjaCoind } from './NinjaCoind';
 export { WalletAPI } from './WalletAPI';
 
 /** @ignore */
@@ -47,7 +47,7 @@ import LedgerErrorCode = Types.LedgerTypes.ErrorCode;
 
 import ICryptoNote = Types.CryptoNoteInterfaces.ICryptoNote;
 
-import TurtleCoindTypes = Types.TurtleCoindTypes;
+import NinjaCoindTypes = Types.NinjaCoindTypes;
 
 import WalletAPITypes = Types.WalletAPITypes;
 
@@ -63,7 +63,7 @@ export {
     LedgerError,
     LedgerTransactionState,
     LedgerErrorCode,
-    TurtleCoindTypes,
+    NinjaCoindTypes,
     WalletAPITypes
 };
 

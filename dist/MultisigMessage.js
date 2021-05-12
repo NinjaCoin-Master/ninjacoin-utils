@@ -137,7 +137,7 @@ class MultisigMessage {
             const decoded = base58_1.Base58.decode(base58);
             const signature = decoded.slice(-128);
             const rawData = decoded.slice(0, decoded.length - 128);
-            const hash = yield Types_1.TurtleCoinCrypto.cn_fast_hash(rawData);
+            const hash = yield Types_1.NinjaCoinCrypto.cn_fast_hash(rawData);
             const reader = new bytestream_1.Reader(rawData);
             const foundPrefix = reader.hex(prefix.varint.length);
             if (foundPrefix !== prefix.hex) {
@@ -147,7 +147,7 @@ class MultisigMessage {
             const length = reader.varint().toJSNumber();
             const transfer = JSON.parse(reader.bytes(length).toString());
             const source = yield Address_1.Address.fromAddress(transfer.address);
-            if (!(yield Types_1.TurtleCoinCrypto.checkSignature(hash, source.spend.publicKey, signature))) {
+            if (!(yield Types_1.NinjaCoinCrypto.checkSignature(hash, source.spend.publicKey, signature))) {
                 throw new Error('Invalid data signature');
             }
             if (reader.unreadBytes !== 0) {
@@ -235,8 +235,8 @@ class MultisigMessage {
             subWriter.write(transfer);
             writer.varint(subWriter.length);
             writer.write(subWriter.buffer);
-            const hash = yield Types_1.TurtleCoinCrypto.cn_fast_hash(writer.blob);
-            const sig = yield Types_1.TurtleCoinCrypto.generateSignature(hash, this.source.spend.publicKey, this.source.spend.privateKey);
+            const hash = yield Types_1.NinjaCoinCrypto.cn_fast_hash(writer.blob);
+            const sig = yield Types_1.NinjaCoinCrypto.generateSignature(hash, this.source.spend.publicKey, this.source.spend.privateKey);
             writer.hex(sig);
             return base58_1.Base58.encode(writer.blob);
         });
@@ -247,7 +247,7 @@ exports.MultisigMessage = MultisigMessage;
 function encrypt(source, destination, payload, nonce) {
     return __awaiter(this, void 0, void 0, function* () {
         const transfer = Buffer.from(JSON.stringify(payload));
-        const aesKey = Buffer.from(yield Types_1.TurtleCoinCrypto.generateKeyDerivation(destination.spend.publicKey, source.spend.privateKey), 'hex');
+        const aesKey = Buffer.from(yield Types_1.NinjaCoinCrypto.generateKeyDerivation(destination.spend.publicKey, source.spend.privateKey), 'hex');
         // eslint-disable-next-line new-cap
         const ctx = new aes_js_1.ModeOfOperation.ctr(aesKey, new aes_js_1.Counter(nonce));
         const encryptedBytes = ctx.encrypt(transfer);
@@ -262,7 +262,7 @@ function encrypt(source, destination, payload, nonce) {
 function decrypt(destination, transfer, nonce) {
     return __awaiter(this, void 0, void 0, function* () {
         const sender = yield Address_1.Address.fromAddress(transfer.address);
-        const aesKey = Buffer.from(yield Types_1.TurtleCoinCrypto.generateKeyDerivation(sender.spend.publicKey, destination.spend.privateKey), 'hex');
+        const aesKey = Buffer.from(yield Types_1.NinjaCoinCrypto.generateKeyDerivation(sender.spend.publicKey, destination.spend.privateKey), 'hex');
         // eslint-disable-next-line new-cap
         const ctx = new aes_js_1.ModeOfOperation.ctr(aesKey, new aes_js_1.Counter(nonce));
         const decryptedBytes = ctx.decrypt(aes_js_1.utils.hex.toBytes(transfer.payload));
@@ -282,7 +282,7 @@ function calculateSpendKeySignatures(spendKeys) {
             if (!keys.isPaired) {
                 throw new Error('The supplied spend keys are not paired correctly');
             }
-            const sig = yield Types_1.TurtleCoinCrypto.generateSignature(keys.publicKey, keys.publicKey, keys.privateKey);
+            const sig = yield Types_1.NinjaCoinCrypto.generateSignature(keys.publicKey, keys.publicKey, keys.privateKey);
             signatures.push({ key: keys.publicKey, signature: sig });
         }
         return signatures;
@@ -292,7 +292,7 @@ function calculateSpendKeySignatures(spendKeys) {
 function verifySpendKeySignatures(spendKeys) {
     return __awaiter(this, void 0, void 0, function* () {
         for (const spendKey of spendKeys) {
-            if (!(yield Types_1.TurtleCoinCrypto.checkSignature(spendKey.key, spendKey.key, spendKey.signature))) {
+            if (!(yield Types_1.NinjaCoinCrypto.checkSignature(spendKey.key, spendKey.key, spendKey.signature))) {
                 throw new Error('Invalid public spend key signature for: ' + spendKey.key);
             }
         }
